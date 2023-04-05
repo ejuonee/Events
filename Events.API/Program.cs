@@ -25,6 +25,12 @@ builder.Services.AddDbContext<DataContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMemoryCache();
+// builder.Services.AddScoped<IEventRepository, EventRepository>();
+// builder.Services.AddScoped<IInvitationRespository, InvitationRespository>();
+// builder.Services.AddScoped<IParticipantRepository, ParticipantRepository>();
+// builder.Services.AddScoped<IUnitOfWorkRepository, UnitOfWorkRepository>();
+
 
 var app = builder.Build();
 

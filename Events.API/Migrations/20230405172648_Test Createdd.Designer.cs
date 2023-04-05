@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Events.API.Migrations
 {
   [DbContext(typeof(DataContext))]
-  [Migration("20230405082305_InitialCreate")]
-  partial class InitialCreate
+  [Migration("20230405172648_Test Createdd")]
+  partial class TestCreatedd
   {
     /// <inheritdoc />
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,6 @@ namespace Events.API.Migrations
 
             b.Property<string>("Description")
                       .IsRequired()
-                      .HasMaxLength(500)
                       .HasColumnType("TEXT");
 
             b.Property<DateTime>("EndDate")
@@ -42,10 +41,11 @@ namespace Events.API.Migrations
 
             b.Property<string>("Title")
                       .IsRequired()
-                      .HasMaxLength(100)
                       .HasColumnType("TEXT");
 
             b.HasKey("Id");
+
+            b.HasIndex("OwnerId");
 
             b.ToTable("Events");
           });
@@ -59,19 +59,22 @@ namespace Events.API.Migrations
             b.Property<Guid>("EventId")
                       .HasColumnType("TEXT");
 
-            b.Property<string>("InviteState")
-                      .IsRequired()
+            b.Property<Guid>("EventOwnerId")
                       .HasColumnType("TEXT");
 
-            b.Property<Guid>("InviteeId")
-                      .HasColumnType("TEXT");
+            b.Property<int>("InviteState")
+                      .HasColumnType("INTEGER");
 
-            b.Property<Guid>("InviterId")
+            b.Property<Guid>("InvitedId")
                       .HasColumnType("TEXT");
 
             b.HasKey("Id");
 
             b.HasIndex("EventId");
+
+            b.HasIndex("EventOwnerId");
+
+            b.HasIndex("InvitedId");
 
             b.ToTable("Invitations");
           });
@@ -83,39 +86,84 @@ namespace Events.API.Migrations
                       .HasColumnType("TEXT");
 
             b.Property<string>("Email")
-                      .HasMaxLength(50)
                       .HasColumnType("TEXT");
 
             b.Property<string>("FirstName")
                       .IsRequired()
-                      .HasMaxLength(50)
                       .HasColumnType("TEXT");
 
             b.Property<string>("LastName")
                       .IsRequired()
-                      .HasMaxLength(50)
                       .HasColumnType("TEXT");
 
             b.Property<string>("UserName")
                       .IsRequired()
-                      .HasMaxLength(20)
                       .HasColumnType("TEXT");
 
             b.HasKey("Id");
 
+            // b.HasIndex("EventId");
+
             b.ToTable("Users");
+          });
+
+      modelBuilder.Entity("Events.API.Models.Event", b =>
+          {
+            b.HasOne("Events.API.Models.User", "Owner")
+                      .WithMany("Events")
+                      .HasForeignKey("OwnerId")
+                      .OnDelete(DeleteBehavior.Restrict);
+
+            b.Navigation("Owner");
           });
 
       modelBuilder.Entity("Events.API.Models.Invitation", b =>
           {
-            b.HasOne("Events.API.Models.Event", null)
+            b.HasOne("Events.API.Models.Event", "Event")
                       .WithMany("Invitations")
                       .HasForeignKey("EventId")
                       .OnDelete(DeleteBehavior.Cascade)
                       .IsRequired();
+
+            b.HasOne("Events.API.Models.User", "EventOwner")
+                      .WithMany("Invites")
+                      .HasForeignKey("EventOwnerId")
+                      .OnDelete(DeleteBehavior.Restrict)
+                      .IsRequired();
+
+            b.HasOne("Events.API.Models.User", "Invited")
+                      .WithMany()
+                      .HasForeignKey("InvitedId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+
+            b.Navigation("Event");
+
+            b.Navigation("EventOwner");
+
+            b.Navigation("Invited");
           });
 
+      //   modelBuilder.Entity("Events.API.Models.User", b =>
+      //       {
+      //         b.HasOne("Events.API.Models.Event", null)
+      //                   .WithMany("Participants")
+      //                   .HasForeignKey("EventId");
+      //       });
 
+      modelBuilder.Entity("Events.API.Models.Event", b =>
+          {
+            b.Navigation("Invitations");
+
+            b.Navigation("Participants");
+          });
+
+      modelBuilder.Entity("Events.API.Models.User", b =>
+          {
+            b.Navigation("Events");
+
+            b.Navigation("Invites");
+          });
 #pragma warning restore 612, 618
     }
   }

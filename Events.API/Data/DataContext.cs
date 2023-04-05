@@ -14,10 +14,33 @@ namespace Events.API.Data
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      base.OnModelCreating(modelBuilder);
-      modelBuilder.ApplyConfiguration(new User.UserConfiguration());
-      modelBuilder.ApplyConfiguration(new Event.EventConfiguration());
-      modelBuilder.ApplyConfiguration(new Invitation.InvitationConfiguration());
+
+      modelBuilder.Entity<Invitation>()
+          .HasOne<Event>(i => i.Event)
+          .WithMany(e => e.Invitations)
+          .HasForeignKey(i => i.EventId)
+          .OnDelete(DeleteBehavior.Cascade);
+
+      modelBuilder.Entity<Invitation>()
+          .HasOne<User>(i => i.EventOwner)
+          .WithMany(i => i.Invites)
+          .HasForeignKey(i => i.EventOwnerId)
+          .OnDelete(DeleteBehavior.Restrict);
+
+      modelBuilder.Entity<Event>()
+      .HasOne(e => e.Owner)
+      .WithMany(u => u.Events)
+      .HasForeignKey(e => e.OwnerId)
+      .OnDelete(DeleteBehavior.Restrict);
+
+      modelBuilder.Entity<User>()
+        .HasMany(u => u.Events)
+        .WithOne(e => e.Owner)
+        .HasForeignKey(e => e.OwnerId)
+        .OnDelete(DeleteBehavior.Restrict)
+        .IsRequired(false);
+
+
 
 
 
