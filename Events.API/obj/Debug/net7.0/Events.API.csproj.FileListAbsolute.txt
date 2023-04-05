@@ -65,3 +65,7 @@
 /Users/olamideekoko/Desktop/Events/Events.API/obj/Debug/net7.0/Events.API.pdb
 /Users/olamideekoko/Desktop/Events/Events.API/obj/Debug/net7.0/Events.API.genruntimeconfig.cache
 /Users/olamideekoko/Desktop/Events/Events.API/obj/Debug/net7.0/ref/Events.API.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Humanizer.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Design.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Mono.TextTemplating.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/System.CodeDom.dll

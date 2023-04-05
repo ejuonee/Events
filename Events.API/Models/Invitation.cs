@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace Events.API.Models
 {
   public class Invitation
@@ -13,18 +8,27 @@ namespace Events.API.Models
     private Guid InviteeId { get; set; }
     private InvitationStatus InviteState { get; set; }
 
-    private Event Event { get; set; }
-
-    public Invitation(Guid eventId, Guid inviterId, Guid inviteeId, Event @event)
+    public Invitation(Guid eventId, Guid inviterId, Guid inviteeId)
     {
       Id = Guid.NewGuid();
       EventId = eventId;
       InviterId = inviterId;
       InviteeId = inviteeId;
       InviteState = InvitationStatus.Pending;
-      Event = @event;
     }
 
+    public class InvitationConfiguration : IEntityTypeConfiguration<Invitation>
+    {
+      public void Configure(EntityTypeBuilder<Invitation> builder)
+      {
+        builder.Property(i => i.Id).ValueGeneratedOnAdd();
+        builder.Property(i => i.EventId);
+        builder.Property(i => i.InviterId);
+        builder.Property(i => i.InviteeId);
+        builder.Property(i => i.InviteState)
+            .HasConversion<string>();
+      }
+    }
 
     public Guid GetId()
     {
@@ -52,11 +56,6 @@ namespace Events.API.Models
     public void ChangeInviteState(InvitationStatus newState)
     {
       this.InviteState = newState;
-    }
-
-    public Event GetEvent()
-    {
-      return Event;
     }
   }
 

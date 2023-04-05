@@ -15,6 +15,12 @@ namespace Events.API.Data
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       base.OnModelCreating(modelBuilder);
+      modelBuilder.ApplyConfiguration(new User.UserConfiguration());
+      modelBuilder.ApplyConfiguration(new Event.EventConfiguration());
+      modelBuilder.ApplyConfiguration(new Invitation.InvitationConfiguration());
+
+
+
     }
 
   }
