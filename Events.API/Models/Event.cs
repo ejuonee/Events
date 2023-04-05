@@ -1,0 +1,146 @@
+
+
+namespace Events.API.Models
+{
+  public class Event
+  {
+    public Event(Guid ownerId, string title, string description, DateTime startDate, DateTime endDate)
+    {
+      Id = Guid.NewGuid();
+      OwnerId = ownerId;
+      Title = title;
+      Description = description;
+      StartDate = startDate;
+      EndDate = endDate;
+      Participants = new List<User>();
+      Invitations = new List<Invitation>();
+    }
+
+    private Guid Id { get; set; }
+    private Guid OwnerId { get; set; }
+    private string Title { get; set; }
+    private string Description { get; set; }
+    private DateTime StartDate { get; set; }
+    private DateTime EndDate { get; set; }
+
+    private ICollection<User> Participants { get; set; }
+
+    private ICollection<Invitation> Invitations { get; set; }
+    public Guid GetId()
+    {
+      return Id;
+    }
+
+    public Guid GetOwnerId()
+    {
+      return OwnerId;
+    }
+    public void changeOwnerId(Guid newOwnerId)
+    {
+      this.OwnerId = newOwnerId;
+    }
+    public string GetTitle()
+    {
+      return Title;
+    }
+
+    public void SetTitle(string title)
+    {
+      this.Title = title;
+    }
+
+    public string GetDescription()
+    {
+      return Description;
+    }
+
+    public void SetDescription(string description)
+    {
+      this.Description = description;
+    }
+
+    public DateTime GetStartDate()
+    {
+      return StartDate;
+    }
+
+    public void SetStartDate(DateTime startDate)
+    {
+      this.StartDate = startDate;
+    }
+
+    public DateTime GetEndDate()
+    {
+      return EndDate;
+    }
+
+    public void SetEndDate(DateTime endDate)
+    {
+      this.EndDate = endDate;
+    }
+
+    public ICollection<User> GetParticipants()
+    {
+      return Participants;
+    }
+
+    public void AddParticipant(User participant)
+    {
+      this.Participants.Add(participant);
+    }
+
+    public void AddParticipants(List<User> participants)
+    {
+      foreach (var participant in participants)
+      {
+        this.Participants.Add(participant);
+      }
+    }
+    public void RemoveParticipant(User participant)
+    {
+      this.Participants.Remove(participant);
+    }
+    public void RemoveParticipants(List<User> participants)
+    {
+      foreach (var participant in participants)
+      {
+        this.Participants.Remove(participant);
+      }
+    }
+
+    public void SendInvite(Invitation invite)
+    {
+      this.Invitations.Add(invite);
+    }
+
+    public void SendInvites(List<Invitation> listInvites)
+    {
+      foreach (var invites in listInvites)
+      {
+        this.Invitations.Add(invites);
+      }
+    }
+
+    public ICollection<Invitation> GetInvites()
+    {
+      return this.Invitations;
+    }
+    public Invitation? GetInvites(Guid inviteId)
+    {
+      return this.Invitations.FirstOrDefault((invite) => invite.GetId() == inviteId);
+    }
+    public void RemoveInvite(Invitation invite)
+    {
+      this.Invitations.Remove(invite);
+    }
+    public void RemoveInvites(List<Invitation> listInvites)
+    {
+      foreach (var invites in listInvites)
+      {
+        this.Invitations.Remove(invites);
+      }
+    }
+  }
+
+
+}
