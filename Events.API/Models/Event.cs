@@ -15,7 +15,6 @@ namespace Events.API.Models
       Participants = new List<User>();
       Invitations = new List<Invitation>();
     }
-
     private Guid Id { get; set; }
     private Guid OwnerId { get; set; }
     private string Title { get; set; }
@@ -23,9 +22,9 @@ namespace Events.API.Models
     private DateTime StartDate { get; set; }
     private DateTime EndDate { get; set; }
 
-    private ICollection<User> Participants { get; set; }
+    private ICollection<User>? Participants { get; set; }
 
-    private ICollection<Invitation> Invitations { get; set; }
+    private ICollection<Invitation>? Invitations { get; set; }
     public Guid GetId()
     {
       return Id;

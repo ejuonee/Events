@@ -58,12 +58,6 @@ namespace Events.API.Models
     {
       return Event;
     }
-    public enum InvitationStatus
-    {
-      Pending,
-      Accepted,
-      Declined
-    }
   }
 
 
