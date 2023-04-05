@@ -16,7 +16,19 @@ namespace Events.API.Models
       InviteeId = inviteeId;
       InviteState = InvitationStatus.Pending;
     }
+    public Invitation(Guid eventId, Guid inviterId, Guid inviteeId, InvitationStatus Invited)
+    {
+      Id = Guid.NewGuid();
+      EventId = eventId;
+      InviterId = inviterId;
+      InviteeId = inviteeId;
+      if (Invited == InvitationStatus.Accepted)
+      {
+        InviteState = InvitationStatus.Accepted;
+      }
 
+
+    }
     public class InvitationConfiguration : IEntityTypeConfiguration<Invitation>
     {
       public void Configure(EntityTypeBuilder<Invitation> builder)

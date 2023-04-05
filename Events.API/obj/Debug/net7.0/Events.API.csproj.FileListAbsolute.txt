@@ -69,3 +69,16 @@
 /Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Design.dll
 /Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Mono.TextTemplating.dll
 /Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/System.CodeDom.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Bogus.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Faker.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Faker.Net.6.0.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Serilog.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Serilog.AspNetCore.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Serilog.Extensions.Hosting.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Serilog.Extensions.Logging.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Serilog.Formatting.Compact.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Serilog.Settings.Configuration.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Serilog.Sinks.Console.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Serilog.Sinks.Debug.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Serilog.Sinks.File.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/de-DE/Faker.Net.6.0.resources.dll
