@@ -86,7 +86,6 @@ namespace Events.API.Controllers
         if (!_cache.TryGetValue(cacheKey, out IEnumerable<Event> events))
         {
           events = await _unitOfWork.EventRepository.GetAllEvents(page,pageSize);
-          events = events.Skip((page - 1) * pageSize).Take(pageSize).ToList();
           _cache.Set(cacheKey, events, TimeSpan.FromMinutes(1));
         }
 

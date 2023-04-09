@@ -7,3 +7,10 @@ public class InvitationsDto
     public Guid InvitedId { get; set; }
     public InvitationStatus InviteState { get; set; }
 }
+
+public class CreateInvitationDto
+{
+    public Guid EventId { get; set; }
+    public Guid InvitedId { get; set; }
+    public InvitationStatus InviteState = InvitationStatus.Pending;
+}

@@ -7,7 +7,7 @@ namespace Events.API.Interfaces
 {
   public interface IInvitationRespository
   {
-    Task<ICollection<Invitation>> GetInvitationsByEventIdAsync(Guid eventId);
+    Task<ICollection<Invitation>> GetInvitationsByEventIdAsync(Guid eventId, int page, int size);
     Task<Invitation> GetInvitationByIdAsync(Guid id);
     Task CreateInvitationAsync(Invitation invitation);
 

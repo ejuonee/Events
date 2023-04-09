@@ -98,18 +98,27 @@ namespace Events.API.Repository
 
     }
 
-    public async Task<ICollection<Invitation>> GetInvitationsByEventIdAsync(Guid eventId)
+    public async Task<ICollection<Invitation>> GetInvitationsByEventIdAsync(Guid eventId, int page = 1, int size = 5)
     {
-      if (eventId == Guid.Empty)
-      {
-        _logger.LogWarning("Invalid event ID provided.");
-        return null;
-      }
+      
 
       try
       {
+        if (eventId == Guid.Empty)
+        {
+          _logger.LogWarning("Invalid event ID provided.");
+          return null;
+        }
+        if (page < 1 || size < 1|| size> 10)
+        {
+          _logger.LogInformation("Invalid pagination parameters provided.");
+          page = 1;
+          size = 5;
+        }
         var invitations = await _context.Invitations
             .Where(i => i.EventId == eventId)
+            .Skip((page - 1) * size)
+            .Take(size)
             .ToListAsync();
         _logger.LogInformation(!invitations.Any()
           ? @$"No invitations found for event with ID {eventId}."
