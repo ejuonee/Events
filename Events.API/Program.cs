@@ -52,7 +52,7 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<DataContext>();
         var logger = services.GetRequiredService<ILogger<Seed>>();
         var seeder = new Seed(context, logger);
-        //await seeder.ClearDatabaseAsync();
+        await seeder.ClearDatabaseAsync();
         //await seeder.SeedAsync();
     }
     catch (Exception ex)
@@ -72,7 +72,8 @@ using (var scope = app.Services.CreateScope())
         var logger = services.GetRequiredService<ILogger<JsonSeed>>();
         var mapper = services.GetRequiredService<IMapper>();
         var jsonSeed = new JsonSeed(logger, context, mapper);
-        await jsonSeed.ExportDatabaseToJsonAsync("Tests");
+        //await jsonSeed.ExportDatabaseToJsonAsync();
+        await jsonSeed.SeedDatabaseFromJsonAsync();
     }
     catch (Exception ex)
     {

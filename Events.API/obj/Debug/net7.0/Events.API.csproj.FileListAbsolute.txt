@@ -82,3 +82,4 @@
 /Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Serilog.Sinks.Debug.dll
 /Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Serilog.Sinks.File.dll
 /Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/de-DE/Faker.Net.6.0.resources.dll
+/Users/olamideekoko/Desktop/Events/Events.API/bin/Debug/net7.0/Data/UserDataSeed.json

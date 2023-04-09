@@ -52,7 +52,7 @@ namespace Events.API.Data
 
                 try
                 {
-                    var testUsers = DataGenerator.GenerateUsers(10);
+                    var testUsers = DataGenerator.GenerateUsers(100);
                     await _context.Users.AddRangeAsync(testUsers);
                     await _context.SaveChangesAsync();
                     var testEvents = DataGenerator.GenerateEvents(testUsers);
