@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "GItbFy9whG5rGRgFR60m/kW29qD8fmCQ+i0EaqJRtNJLOnahhFHSGPoJKGkjRTdtYpG6MILES2Oca2qmXcixwg==",
+  "dgSpecHash": "se4BDxbxvY9h/ZNY/Pge+w0qKi0xd72PSNOkB6G6xom2VSce6qcrlknbGxkVlztLAWVORPtSetFKIYpCcntDZw==",
   "success": true,
   "projectFilePath": "/Users/olamideekoko/Desktop/Events/Events.API/Events.API.csproj",
   "expectedPackageFiles": [
-    "/Users/olamideekoko/.nuget/packages/automapper/12.0.0/automapper.12.0.0.nupkg.sha512",
-    "/Users/olamideekoko/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.0/automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
+    "/Users/olamideekoko/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
+    "/Users/olamideekoko/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/bogus/34.0.2/bogus.34.0.2.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/faker/1.2.0/faker.1.2.0.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/faker.net/2.0.154/faker.net.2.0.154.nupkg.sha512",

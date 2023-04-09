@@ -2,7 +2,7 @@ namespace Events.API.Interfaces
 {
   public interface IEventRepository
   {
-    public Task<ICollection<Event>> GetAllEvents();
+    public Task<ICollection<Event>> GetAllEvents(int page,int size);
     public Task<Event> GetEventById(Guid Id);
     public Task<ICollection<Event>> GetUserEventsAsync(Guid userId);
 

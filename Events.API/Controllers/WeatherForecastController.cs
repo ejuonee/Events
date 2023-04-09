@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace Events.API.Controllers;
 
 [ApiController]

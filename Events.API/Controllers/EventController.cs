@@ -1,90 +1,158 @@
-// global using Microsoft.AspNetCore.Mvc;
-// global using Microsoft.Extensions.Caching.Memory;
-
-// namespace Events.API.Controllers
-// {
-//   [ApiController]
-//   [Route("api/[controller]")]
-//   public class EventController : ControllerBase
-//   {
-//     private readonly ILogger<EventController> _logger;
-//     private readonly IUnitOfWorkRepository _unitOfWork;
-
-//     private readonly IMemoryCache _cache;
-
-//     public EventController(ILogger<EventController> logger, IUnitOfWorkRepository unitOfWork, IMemoryCache cache)
-//     {
-//       _logger = logger;
-//       _unitOfWork = unitOfWork;
-//       _cache = cache;
-//     }
 
 
+using Events.API.DTO;
 
+namespace Events.API.Controllers
+{
+  [ApiController]
+  [Route("api/[controller]")]
+  public class EventController : ControllerBase
+  {
+    private readonly ILogger<EventController> _logger;
+    private readonly IUnitOfWorkRepository _unitOfWork;
+    private readonly IMemoryCache _cache;
+    private readonly IMapper _mapper;
+    public EventController(ILogger<EventController> logger, IUnitOfWorkRepository unitOfWork, IMemoryCache cache, IMapper mapper)
+    {
+      _logger = logger;
+      _unitOfWork = unitOfWork;
+      _cache = cache;
+      _mapper = mapper;
+    }
+    [HttpPost]
+    public async Task<ActionResult<EventsDto>> CreateEvent([FromBody] RegisterEventDto eventItemDto)
+    {
+      try
+      {
+        _logger.LogInformation($"Creating a new event with  {JsonSerializer.Serialize(eventItemDto)}");
 
-//     [HttpPost]
-//     public async Task<ActionResult<Event>> CreateEvent(Event eventItem)
-//     {
-//       await _unitOfWork.EventRepository.CreateEventAsync(eventItem);
-//       await _unitOfWork.Complete();
+        if (!ModelState.IsValid)
+        {
+          var errors = string.Join(", ", ModelState.Values
+            .SelectMany(v => v.Errors)
+            .Select(e => e.ErrorMessage));
+          _logger.LogInformation($"Validation errors occurred while creating event: {errors}");
+          _logger.LogInformation($"Invalid data received while creating event {JsonSerializer.Serialize(eventItemDto)}");
+          return BadRequest(ModelState);
+        }
 
-//       return CreatedAtAction(nameof(GetEventById), new { id = eventItem.GetId() }, eventItem);
-//     }
+        var eventItem = _mapper.Map<Event>(eventItemDto);
+        await _unitOfWork.EventRepository.CreateEventAsync(eventItem);
+        await _unitOfWork.Complete();
+        var resultEventDto = _mapper.Map<EventsDto>(eventItem);
 
-//     [HttpGet("{id}")]
-//     public async Task<ActionResult<Event>> GetEventById(Guid id)
-//     {
-//       var cacheKey = $"event_{id}";
-//       if (!_cache.TryGetValue(cacheKey, out Event eventItem))
-//       {
-//         eventItem = await _unitOfWork.EventRepository.GetEventById(id);
-//         if (eventItem == null)
-//         {
-//           return NotFound();
-//         }
-//         _cache.Set(cacheKey, eventItem, TimeSpan.FromMinutes(1));
-//       }
-//       return Ok(eventItem);
-//     }
-//     [HttpGet]
-//     public async Task<ActionResult<IEnumerable<Event>>> GetAllEvents([FromQuery] int page = 1, [FromQuery] int pageSize = 12)
-//     {
-//       var cacheKey = $"events_{page}_Size{pageSize}";
-//       if (!_cache.TryGetValue(cacheKey, out IEnumerable<Event> events))
-//       {
-//         events = await _unitOfWork.EventRepository.GetAllEvents();
-//         events = events.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-//         _cache.Set(cacheKey, events, TimeSpan.FromMinutes(1));
-//       }
-//       return Ok(events);
-//     }
-//     [HttpDelete("{id}")]
-//     public async Task<IActionResult> DeleteEvent(Guid id)
-//     {
-//       var eventItem = await _unitOfWork.EventRepository.GetEventById(id);
-//       if (eventItem == null)
-//       {
-//         return BadRequest();
-//       }
+        _logger.LogInformation($"Created a new event with ID {eventItem.Id}");
 
-//       await _unitOfWork.EventRepository.DeleteEventAsync(id);
-//       await _unitOfWork.Complete();
+        return CreatedAtAction(nameof(GetEventById), new { id = resultEventDto.Id }, resultEventDto);
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, $"An error occurred while creating event {JsonSerializer.Serialize(eventItemDto)}");
+        return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while creating event");
+      }
+    }
 
-//       return NoContent();
-//     }
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<EventsDto>> GetEventById(Guid id)
+    {
+      try
+      {
+        var cacheKey = $"event_{id}";
+        if (!_cache.TryGetValue(cacheKey, out Event eventItem))
+        {
+          eventItem = await _unitOfWork.EventRepository.GetEventById(id);
+          if (eventItem == null)
+          {
+            return NotFound();
+          }
+          _cache.Set(cacheKey, eventItem, TimeSpan.FromMinutes(1));
+         
+        }
+        var eventItemDto = _mapper.Map<EventsDto>(eventItem);
+        return Ok(eventItemDto);
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, $"An error occurred while getting event {id}");
+        return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while getting the event");
+      }
+    }
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<EventsDto>>> GetAllEvents([FromQuery] int page = 1, [FromQuery] int pageSize = 5)
+    {
+      try
+      {
+        var cacheKey = $"events_{page}_Size{pageSize}";
+        if (!_cache.TryGetValue(cacheKey, out IEnumerable<Event> events))
+        {
+          events = await _unitOfWork.EventRepository.GetAllEvents(page,pageSize);
+          events = events.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+          _cache.Set(cacheKey, events, TimeSpan.FromMinutes(1));
+        }
 
-//     [HttpPut("{id}")]
-//     public async Task<IActionResult> UpdateEvent(Guid id, Event eventItem)
-//     {
-//       if (id != eventItem.GetId())
-//       {
-//         return BadRequest();
-//       }
+        var eventsDto = _mapper.Map<IEnumerable<EventsDto>>(events);
+        return Ok(eventsDto);
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "An error occurred while getting all events");
+        return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while getting all events");
+      }
+    }
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteEvent(Guid id)
+    {
+      try
+      {
+        var eventItem = await _unitOfWork.EventRepository.GetEventById(id);
+        if (eventItem == null)
+        {
+          return BadRequest();
+        }
 
-//       await _unitOfWork.EventRepository.UpdateEventAsync(eventItem);
-//       await _unitOfWork.Complete();
+        await _unitOfWork.EventRepository.DeleteEventAsync(id);
+        await _unitOfWork.Complete();
 
-//       return NoContent();
-//     }
-//   }
-// }
+        _logger.LogInformation($"Event with ID {id} has been successfully deleted.");
+
+        return NoContent();
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, $"An error occurred while deleting event {id}");
+        return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while deleting the event");
+      }
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateEvent( EventsDto eventItemDto)
+    {
+      
+      try
+      {
+        if (!ModelState.IsValid)
+        {
+          var errors = string.Join(", ", ModelState.Values
+            .SelectMany(v => v.Errors)
+            .Select(e => e.ErrorMessage));
+          _logger.LogInformation($"Validation errors occurred while updating event: {errors}");
+          _logger.LogInformation($"Invalid data received while updating event {eventItemDto.Id}");
+          return BadRequest(ModelState);
+        }
+
+        var eventItem = _mapper.Map<Event>(eventItemDto);
+        await _unitOfWork.EventRepository.UpdateEventAsync(eventItem);
+        await _unitOfWork.Complete();
+
+        _logger.LogInformation($"Event with ID {eventItemDto.Id} has been successfully updated.");
+
+        return NoContent();
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, $"An error occurred while updating event {eventItemDto.Id}");
+        return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating the event");
+      }
+    }
+  }
+}

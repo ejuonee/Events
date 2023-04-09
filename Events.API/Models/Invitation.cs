@@ -2,22 +2,22 @@ namespace Events.API.Models
 {
   public class Invitation
   {
-    public Guid Id { get; set; }
-    public Guid EventId { get; set; }
-    public Event Event { get; set; }
-
-    public Guid EventOwnerId { get; set; }
-    public User EventOwner { get; set; }
-
-    public Guid InvitedId { get; set; }
-    public User Invited { get; set; }
-    public InvitationStatus InviteState { get; set; }
+    public Invitation(Guid eventId, Guid invitedId, InvitationStatus inviteState)
+    {
+      EventId = eventId;
+      InvitedId = invitedId;
+      InviteState = inviteState;
+    }
 
     public Invitation()
     {
-      Id = Guid.NewGuid();
-      InviteState = InvitationStatus.Pending;
     }
+
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
+    public Guid EventId { get; set; }
+    public Guid InvitedId { get; set; }
+    public InvitationStatus InviteState { get; set; }
   }
 
 

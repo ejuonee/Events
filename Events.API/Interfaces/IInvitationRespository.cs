@@ -11,7 +11,7 @@ namespace Events.API.Interfaces
     Task<Invitation> GetInvitationByIdAsync(Guid id);
     Task CreateInvitationAsync(Invitation invitation);
 
-    Task UpdateInvitationAsync(Invitation invitation);
+    Task UpdateInvitationAsync(Guid invitationId, InvitationStatus status);
 
     Task DeleteInvitationAsync(Guid id);
 

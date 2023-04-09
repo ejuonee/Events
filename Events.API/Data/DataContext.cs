@@ -11,39 +11,45 @@ namespace Events.API.Data
     public DbSet<User> Users { get; set; }
     public DbSet<Event> Events { get; set; }
     public DbSet<Invitation> Invitations { get; set; }
+    
+    public  DbSet<Participant> Participants { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
-      modelBuilder.Entity<Invitation>()
-          .HasOne<Event>(i => i.Event)
-          .WithMany(e => e.Invitations)
-          .HasForeignKey(i => i.EventId)
-          .OnDelete(DeleteBehavior.Cascade);
-
-      modelBuilder.Entity<Invitation>()
-          .HasOne<User>(i => i.EventOwner)
-          .WithMany(i => i.Invites)
-          .HasForeignKey(i => i.EventOwnerId)
-          .OnDelete(DeleteBehavior.Restrict);
-
-      modelBuilder.Entity<Event>()
-      .HasOne(e => e.Owner)
-      .WithMany(u => u.Events)
-      .HasForeignKey(e => e.OwnerId)
-      .OnDelete(DeleteBehavior.Restrict);
-
+      // User - OwnedEvents relationship (One-to-Many)
       modelBuilder.Entity<User>()
-        .HasMany(u => u.Events)
-        .WithOne(e => e.Owner)
+        .HasMany(u => u.OwnedEvents)
+        .WithOne()
         .HasForeignKey(e => e.OwnerId)
-        .OnDelete(DeleteBehavior.Restrict)
-        .IsRequired(false);
+        .OnDelete(DeleteBehavior.Cascade);
 
+      // User - RegisteredEvents relationship (Many-to-Many)
+      modelBuilder.Entity<Participant>()
+        .HasIndex(p => new { p.UserId, p.EventId }).IsUnique();
 
+      modelBuilder.Entity<Participant>()
+        .HasOne<User>()
+        .WithMany(u => u.RegisteredEvents)
+        .HasForeignKey(p => p.UserId);
 
+      modelBuilder.Entity<Participant>()
+        .HasOne<Event>()
+        .WithMany(e => e.Participants)
+        .HasForeignKey(p => p.EventId);
 
+      // User - Invites relationship (One-to-Many)
+      modelBuilder.Entity<User>()
+        .HasMany(u => u.Invites)
+        .WithOne()
+        .HasForeignKey(i => i.InvitedId)
+        .OnDelete(DeleteBehavior.Cascade);
 
+      // Event - Invites relationship (One-to-Many)
+      modelBuilder.Entity<Event>()
+        .HasMany(e => e.Invites)
+        .WithOne()
+        .HasForeignKey(i => i.EventId)
+        .OnDelete(DeleteBehavior.Cascade);
     }
 
   }
