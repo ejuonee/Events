@@ -5,6 +5,8 @@
 *.lock.json
 .nuget/
 .packages
+**/.idea/
+**/.vscode/
 
 *.suo
 *.user
