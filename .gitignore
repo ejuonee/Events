@@ -12,7 +12,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-
+.DS_Store
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/

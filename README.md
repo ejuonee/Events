@@ -1,31 +1,38 @@
-<h1>Events API<h1>
+<h1>Events API</h1>
 
-The Events API is a RESTful API designed to manage events, invitations, and participants. It allows users to create, retrieve, update, and delete events, as well as manage invitations and participants for each event.
+<p>The Events API is a RESTful API designed to manage events, invitations, and participants. It allows users to create, retrieve, update, and delete events, as well as manage invitations and participants for each event.</p>
 
-Features
-Create, retrieve, update, and delete events
-Manage invitations and participants for events
-Pagination support for retrieving events
-Built with .NET 7.0 and Entity Framework Core
-Unit tests for the API
-Containerized with Docker
+<h2>Features</h2>
+<ul>
+  <li>Create, retrieve, update, and delete events</li>
+  <li>Manage invitations and participants for events</li>
+  <li>Pagination support for retrieving events</li>
+  <li>Built with .NET 7.0 and Entity Framework Core</li>
+  <li>Unit tests for the API</li>
+  <li>Containerized with Docker</li>
+</ul>
 
-Prerequisites
-.NET SDK 7.0
-dotnet ef 7.
-Docker (Optional)
+<h2>Prerequisites</h2>
+<ul>
+  <li>.NET SDK 7.0</li>
+  <li>dotnet ef 7.</li>
+  <li>Docker (Optional)</li>
+</ul>
 
-Getting Started
-After cloning the repository please run the following commands.
+<h2>Getting Started</h2>
+<p>After cloning the repository please run the following commands:</p>
 
+<pre>
 cd Events.API
 dotnet ef migrations add "Initial Create"
-dotnet ef database update.
+dotnet ef database update
 dotnet build
 dotnet watch run
+</pre>
 
-if you want to run it using the container
+<p>If you want to run it using the container:</p>
 
+<pre>
 cd Events.API
 dotnet ef migrations add "Initial Create"
 dotnet ef database update
@@ -33,9 +40,13 @@ dotnet ef database update
 cd ..
 docker compose build
 docker compose up
+</pre>
 
-On Initialization the database seeds itself with data and a copy of that data is made available at
+<p>On Initialization the database seeds itself with data and a copy of that data is made available at:</p>
+
+<pre>
 cd Events.API/Data/
 FileName UserDataSeed.json
+</pre>
 
-and after your api is ready for test
+<p>After your API is ready for test</p>
