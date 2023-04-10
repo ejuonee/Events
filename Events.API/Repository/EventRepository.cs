@@ -11,146 +11,145 @@ namespace Events.API.Repository
       _context = context;
       _logger = logger;
     }
-    public async Task<ICollection<Event>> GetAllEvents(int page = 1, int size= 5)
+    public async Task<ICollection<Event>> GetAllEvents(int page = 1, int size = 5)
     {
-      try
+
+      if (page < 1 || size < 1 || size > 10)
       {
-        if (page < 1 || size < 1|| size> 10)
-        {
-          _logger.LogInformation("Invalid pagination parameters provided.");
-          page = 1;
-          size = 5;
-        }
-        _logger.LogInformation(@$"Getting all events from the database with pagination (page: {page}, size: {size})");
-        var events = await _context.Events
-          .OrderByDescending(e => e.StartDate)
-          .Include(e=>e.Participants)
-          .Include(e=>e.Invites)
-          .Skip((page - 1) * size)
-          .Take(size)
-          .ToListAsync();
-        _logger.LogInformation(events.Count == 0
-          ? @$"No events found."
-          : @$"Successfully retrieved {events.Count} events from the database");
-       
-        return events;
+        _logger.LogInformation("Invalid pagination parameters provided.");
+        page = 1;
+        size = 10;
       }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, @$"Error getting all events from the database with pagination (page: {page}, size: {size})");
-        return null;
-      }
+      _logger.LogInformation(@$"Getting all events from the database with pagination (page: {page}, size: {size})");
+      var events = await _context.Events
+        .OrderByDescending(e => e.StartDate)
+        .Include(e => e.Participants)
+        .Include(e => e.Invites)
+        .Skip((page - 1) * size)
+        .Take(size)
+        .ToListAsync();
+      _logger.LogInformation(events.Count == 0
+        ? @$"No events found."
+        : @$"Successfully retrieved {events.Count} events from the database");
+
+      return events;
     }
 
-    public async Task<Event> GetEventById(Guid Id)
+    public async Task<Event> GetEventById(int Id)
     {
-      try
+
+      if (!Int32.IsPositive(Id))
       {
-        _logger.LogInformation(@$"Getting event with ID {Id} from the database");
-        var @event = await _context.Events
-          .Include(e => e.Participants)
-          .Include(e => e.Invites)
-          .FirstOrDefaultAsync(e => e.Id ==Id);
+        _logger.LogError("Invalid invitation ID provided.");
+        throw new ArgumentException("Invalid event ID provided.");
+
+      }
+      _logger.LogInformation(@$"Getting event with ID {Id} from the database");
+      var @event = await _context.Events
+        .Include(e => e.Participants)
+        .Include(e => e.Invites)
+        .FirstOrDefaultAsync(e => e.EventId == Id);
+
+      if (@event == null)
+      {
+        _logger.LogError(@$"Event not found for ID: {Id}");
+        throw new KeyNotFoundException(@$"Event not found for ID: {Id}");
+
+      }
+      _logger.LogInformation($"Successfully retrieved event with ID {Id} from the database");
+      return @event;
 
 
-        _logger.LogInformation(@event == null
-          ? @$"Event with ID {Id} not found in the database"
-          : $"Successfully retrieved event with ID {Id} from the database");
-        return @event;
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, @$"Error getting event with ID {Id} from the database");
-        return null;
-      }
     }
 
-    public async Task<ICollection<Event>> GetUserEventsAsync(Guid userId)
+    public async Task<ICollection<Event>> GetUserEventsAsync(int userId)
     {
-      try
+
+      if (!Int32.IsPositive(userId))
       {
-        _logger.LogInformation(@$"Getting events for user with ID {userId} from the database");
-        var events = await _context.Events
-          .Where(e => e.OwnerId == userId)
-          .Include(e => e.Participants)
-          .Include(e => e.Invites)
-          .ToListAsync();
-        _logger.LogInformation(@$"Successfully retrieved {events.Count} events for user with ID {userId} from the database");
-        return events;
+        _logger.LogError("Invalid User ID provided.");
+        throw new ArgumentException("Invalid USer ID provided.");
       }
-      catch (Exception ex)
+      _logger.LogInformation(@$"checking if the user with ID {userId} exists in the database");
+      var userExists = await _context.Users.AnyAsync(u => u.UserId == userId);
+      if (!userExists)
       {
-        _logger.LogError(ex, @$"Error getting events for user with ID {userId} from the database");
-        return null;
+        _logger.LogError($"User with ID {userId} does not exist.");
+        throw new KeyNotFoundException($"User with ID {userId} does not exist.");
       }
+      _logger.LogInformation(@$"Getting events for user with ID {userId} from the database");
+      var events = await _context.Events
+        .Where(e => e.OwnerId == userId)
+        .Include(e => e.Participants)
+        .Include(e => e.Invites)
+        .ToListAsync();
+      _logger.LogInformation(@$"Successfully retrieved {events.Count} events for user with ID {userId} from the database");
+      return events;
+
     }
 
     public async Task CreateEventAsync(Event @event)
     {
-      try
+      if (@event == null)
       {
-        if (@event == null)
-        {
-          _logger.LogError("Event cannot be null");
-          throw new ArgumentNullException(nameof(@event));
-        }
+        _logger.LogError("Event cannot be null");
+        throw new ArgumentNullException(nameof(@event));
+      }
 
-        await _context.Events.AddAsync(@event);
-        _logger.LogInformation(@$"Event created with id {@event.Id}");
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "Error in CreateEventAsync");
-      }
+      await _context.Events.AddAsync(@event);
+      _logger.LogInformation(@$"Event created with id {@event.EventId}");
 
       await Task.CompletedTask;
     }
 
     public async Task UpdateEventAsync(Event @event)
     {
-      try
+      if (@event == null)
       {
-        if (@event == null)
-        {
-          throw new ArgumentNullException(nameof(@event), "Event cannot be null");
-        }
-        _logger.LogInformation(@$"Updating event with ID:{@event.Id}");
-        var existingEvent = await _context.Events.FindAsync(@event.Id);
-
-        if (existingEvent == null)
-        {
-          _logger.LogWarning(@$"Event not found for ID: {@event.Id}");
-          throw new ArgumentException(@$"Event not found for ID: {@event.Id}");
-        }
-        _context.Events.Update(@event);
-        _context.Entry(@event).State = EntityState.Modified;
+        _logger.LogError("Event cannot be null");
+        throw new ArgumentNullException(nameof(@event), "Event cannot be null");
       }
-      catch (Exception ex)
+      _logger.LogInformation(@$"Updating event with ID:{@event.EventId}");
+      var existingEvent = await _context.Events.FindAsync(@event.EventId);
+
+      if (existingEvent == null)
       {
-        _logger.LogError(ex, "Error in UpdateEventAsync");
+        _logger.LogError(@$"Event not found for ID: {@event.EventId}");
+        throw new KeyNotFoundException(@$"Event not found for ID: {@event.EventId}");
       }
+      existingEvent.OwnerId = @event.OwnerId;
+      existingEvent.Title = @event.Title;
+      existingEvent.Description = @event.Description;
+      existingEvent.StartDate = @event.StartDate;
+      existingEvent.EndDate = @event.EndDate;
+      existingEvent.Participants = @event.Participants;
+      existingEvent.Invites = @event.Invites;
+      existingEvent.Location = @event.Location;
+      existingEvent.EventType = @event.EventType;
 
+      _context.Events.Update(existingEvent);
+      _context.Entry(existingEvent).State = EntityState.Modified;
       await Task.CompletedTask;
     }
 
-    public async Task DeleteEventAsync(Guid Id)
+    public async Task DeleteEventAsync(int Id)
     {
-      try
+
+      if (!Int32.IsPositive(Id))
       {
-        _logger.LogInformation(@$"Deleting event with {Id}" );
-        var @event = await _context.Events.FindAsync(Id);
-        if (@event == null)
-        {
-          _logger.LogWarning(@$"Event {Id} not found");
-          throw new ArgumentException(@$"Event with ID {Id} not found");
-        }
-        _context.Events.Remove(@event);
-        _logger.LogInformation(@$"Event {Id} deleted");
+        _logger.LogError("Invalid event ID provided.");
+        throw new ArgumentException("Invalid event ID provided.");
       }
-      catch (Exception ex)
+      _logger.LogInformation(@$"Deleting event with {Id}");
+      var @event = await _context.Events.FindAsync(Id);
+      if (@event == null)
       {
-        _logger.LogError(ex, "Error in DeleteEventAsync");
+        _logger.LogError(@$"Event {Id} not found");
+        throw new KeyNotFoundException(@$"Event with ID {Id} not found");
       }
+      _context.Events.Remove(@event);
+      _logger.LogInformation(@$"Event {Id} deleted");
+
 
       await Task.CompletedTask;
     }

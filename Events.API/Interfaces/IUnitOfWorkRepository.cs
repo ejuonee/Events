@@ -11,6 +11,8 @@ namespace Events.API.Interfaces
     IInvitationRespository InvitationRespository { get; }
     IParticipantRepository ParticipantRepository { get; }
     Task<bool> Complete();
+
+    Task<bool> IsUserExistsAsync(int userId);
     bool HasChanges();
   }
 }

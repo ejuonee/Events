@@ -2,18 +2,18 @@ namespace Events.API.Models;
 
 public class Participant
 {
-    public Participant( Guid userId, Guid eventId)
-    {
-        UserId = userId;
-        EventId = eventId;
-    }
+  public Participant(int userId, int eventId)
+  {
+    UserId = userId;
+    EventId = eventId;
+  }
 
-    public Participant()
-    {
-    }
+  public Participant()
+  {
+  }
 
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public Guid EventId { get; set; }
+  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+  public int ParticipantId { get; set; }
+  public int UserId { get; set; }
+  public int EventId { get; set; }
 }

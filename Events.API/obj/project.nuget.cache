@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "se4BDxbxvY9h/ZNY/Pge+w0qKi0xd72PSNOkB6G6xom2VSce6qcrlknbGxkVlztLAWVORPtSetFKIYpCcntDZw==",
+  "dgSpecHash": "lBM1dVDes3gR3TPLJV/BbWWjczlx9rff9zWWUcXuEOvpFNSdOTrNlPQfRS9YoRRQwhTXVx1zLf1EjwRRzabjIg==",
   "success": true,
   "projectFilePath": "/Users/olamideekoko/Desktop/Events/Events.API/Events.API.csproj",
   "expectedPackageFiles": [
     "/Users/olamideekoko/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/bogus/34.0.2/bogus.34.0.2.nupkg.sha512",
+    "/Users/olamideekoko/.nuget/packages/castle.core/5.1.1/castle.core.5.1.1.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/faker/1.2.0/faker.1.2.0.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/faker.net/2.0.154/faker.net.2.0.154.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
@@ -39,6 +40,7 @@
     "/Users/olamideekoko/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",
+    "/Users/olamideekoko/.nuget/packages/moq/4.18.4/moq.4.18.4.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/serilog/2.12.0/serilog.2.12.0.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/serilog.aspnetcore/6.1.0/serilog.aspnetcore.6.1.0.nupkg.sha512",
@@ -58,6 +60,7 @@
     "/Users/olamideekoko/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.4.0/swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.4.0/swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/system.codedom/4.4.0/system.codedom.4.4.0.nupkg.sha512",
+    "/Users/olamideekoko/.nuget/packages/system.diagnostics.eventlog/6.0.0/system.diagnostics.eventlog.6.0.0.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",
     "/Users/olamideekoko/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512"

@@ -7,13 +7,13 @@ namespace Events.API.Interfaces
 {
   public interface IInvitationRespository
   {
-    Task<ICollection<Invitation>> GetInvitationsByEventIdAsync(Guid eventId, int page, int size);
-    Task<Invitation> GetInvitationByIdAsync(Guid id);
+    Task<ICollection<Invitation>> GetInvitationsByEventIdAsync(int eventId, int page, int size);
+    Task<Invitation> GetInvitationByInvitationIdandEventIdAsync(int invitationId, int eventId);
     Task CreateInvitationAsync(Invitation invitation);
 
-    Task UpdateInvitationAsync(Guid invitationId, InvitationStatus status);
+    Task UpdateInvitationAsync(Invitation invitation);
 
-    Task DeleteInvitationAsync(Guid id);
+    Task DeleteInvitationAsync(int id);
 
 
 

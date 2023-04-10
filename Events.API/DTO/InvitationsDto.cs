@@ -2,23 +2,30 @@ namespace Events.API.DTO;
 
 public class InvitationsDto
 {
-    public Guid Id { get; set; }
-    public Guid EventId { get; set; }
-    public Guid InvitedId { get; set; }
-    public InvitationStatus InviteState { get; set; }
+  public int InvitationId { get; set; }
+  public int EventId { get; set; }
+  public int InvitedId { get; set; }
+  public string InvitationMessage { get; set; }
+  public string InviterUserName { get; set; }
+  public InvitationStatus InviteState { get; set; }
 }
 
 public class CreateInvitationDto
 {
-    public Guid EventId { get; set; }
-    public Guid InvitedId { get; set; }
-    public InvitationStatus InviteState = InvitationStatus.Pending;
+  public int InvitedId { get; set; }
+  public string InvitationMessage { get; set; }
+  public InvitationStatus InviteState = InvitationStatus.Pending;
 }
-
+public class UpdateInvitation
+{
+  public InvitationStatus InviteState { get; set; }
+}
 public class ExportInvitationDto
 {
-    public Guid Id { get; set; }
-    public Guid EventId { get; set; }
-    public Guid InvitedId { get; set; }
-    public InvitationStatus InviteState { get; set; }
+  public int InvitationId { get; set; }
+  public int EventId { get; set; }
+  public int InvitedId { get; set; }
+  public string InvitationMessage { get; set; }
+  public string InviterUserName { get; set; }
+  public InvitationStatus InviteState { get; set; }
 }

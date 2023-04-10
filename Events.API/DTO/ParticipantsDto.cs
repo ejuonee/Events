@@ -2,19 +2,18 @@ namespace Events.API.DTO;
 
 public class ParticipantsDto
 {
-    public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public Guid EventId { get; set; }
+  public int ParticipantId { get; set; }
+  public int UserId { get; set; }
+  public int EventId { get; set; }
 }
 
 public class RegisterParticipantsDto
 {
-    public Guid UserId { get; set; }
-    public Guid EventId { get; set; }
+  public int UserId { get; set; }
 }
 public class ExportParticipantsDto
 {
-    public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public Guid EventId { get; set; }
+  public int ParticpantId { get; set; }
+  public int UserId { get; set; }
+  public int EventId { get; set; }
 }

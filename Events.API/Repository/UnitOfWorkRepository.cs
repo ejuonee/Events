@@ -9,12 +9,14 @@ namespace Events.API.Repository
     private IEventRepository _eventRepository;
     private IInvitationRespository _invitationRepository;
     private IParticipantRepository _participantRepository;
+    private ILogger<UnitOfWorkRepository> _logger;
 
 
-    public UnitOfWorkRepository(DataContext context, ILoggerFactory loggerFactory)
+    public UnitOfWorkRepository(DataContext context, ILoggerFactory loggerFactory, ILogger<UnitOfWorkRepository> logger)
     {
       _context = context;
       _loggerFactory = loggerFactory;
+      _logger = logger;
 
     }
 
@@ -35,7 +37,35 @@ namespace Events.API.Repository
 
     public async Task<bool> Complete()
     {
-      return await _context.SaveChangesAsync() > 0;
+      for (int i = 0; i < 4; i++)
+      {
+        try
+        {
+          var result = await _context.SaveChangesAsync() > 0;
+          if (result)
+            return true;
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+          _logger.LogError("Concurrency conflict occurred on attempt {Attempt}. Retrying...", i + 1);
+
+          // Refresh the data in the context
+          foreach (var entry in ex.Entries)
+          {
+            if (entry.Entity != null)
+            {
+              entry.Reload();
+            }
+          }
+        }
+        catch (Exception ex)
+        {
+          _logger.LogError(ex, "Error saving to the database");
+          return false;
+        }
+      }
+
+      return false;
     }
     public bool HasChanges()
     {
@@ -45,5 +75,25 @@ namespace Events.API.Repository
     {
       _context.Dispose();
     }
+    public async Task<bool> IsUserExistsAsync(int userId)
+    {
+      try
+      {
+        _logger.LogInformation($"Checking if user with ID {userId} exists in the database");
+        var userExists = await _context.Users.AnyAsync(u => u.UserId == userId);
+
+        _logger.LogInformation(userExists
+          ? $"User with ID {userId} exists in the database"
+          : $"User with ID {userId} not found in the database");
+
+        return userExists;
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, $"Error checking if user with ID {userId} exists in the database");
+        return false;
+      }
+    }
+
   }
 }

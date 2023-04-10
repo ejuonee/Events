@@ -21,15 +21,20 @@ namespace Events.API.Controllers
       _cache = cache;
       _mapper = mapper;
     }
-    
+
     [HttpPost]
-    public async Task<ActionResult<InvitationsDto>> CreateInvitation(Guid eventId,
+    public async Task<ActionResult<InvitationsDto>> CreateInvitation(int eventId,
       [FromBody] CreateInvitationDto invitationDto)
     {
       try
       {
         _logger.LogInformation($"Creating a new invitation with {JsonSerializer.Serialize(invitationDto)}");
-
+        var eventExists = await _unitOfWork.EventRepository.GetEventById(eventId);
+        if (eventExists == null)
+        {
+          _logger.LogWarning($"Event with ID {eventId} not found.");
+          return NotFound(new { message = $"Event with ID {eventId} not found." });
+        }
         if (!ModelState.IsValid)
         {
           var errors = string.Join(", ", ModelState.Values
@@ -38,12 +43,19 @@ namespace Events.API.Controllers
           _logger.LogInformation($"Validation errors occurred while creating the invitation : {errors}");
           _logger.LogInformation(
             $"Invalid data received while creating invitation {JsonSerializer.Serialize(invitationDto)}");
-          return BadRequest(ModelState);
+          return BadRequest(new { message = ModelState });
         }
 
         var invitation = _mapper.Map<Invitation>(invitationDto);
-        await _unitOfWork.InvitationRespository.CreateInvitationAsync (invitation);
-        await _unitOfWork.Complete();
+        invitation.EventId = eventId;
+        await _unitOfWork.InvitationRespository.CreateInvitationAsync(invitation);
+        var result = await _unitOfWork.Complete();
+        if (!result)
+        {
+          _logger.LogError(@$"Unable to create invitation {JsonSerializer.Serialize(invitationDto)} ");
+          return BadRequest(new { message = @$"Unable to create invitation {JsonSerializer.Serialize(invitationDto)}
+          " });
+        }
 
         var resultInvitationDto = _mapper.Map<InvitationsDto>(invitation);
 
@@ -52,6 +64,16 @@ namespace Events.API.Controllers
         return CreatedAtAction(nameof(CreateInvitation),
           new { eventId = eventId, userId = resultInvitationDto.InvitedId }, resultInvitationDto);
       }
+      catch (ArgumentException ex)
+      {
+        _logger.LogError(ex, $"Invalid invitation object while creating invitation {JsonSerializer.Serialize(invitationDto)} for event {eventId}");
+        return BadRequest(new { message = ex.Message });
+      }
+      catch (KeyNotFoundException ex)
+      {
+        _logger.LogError(ex, $"An error occurred creating invitation {JsonSerializer.Serialize(invitationDto)} for event {eventId}");
+        return NotFound(new { message = ex.Message });
+      }
       catch (Exception ex)
       {
         _logger.LogError(ex,
@@ -59,16 +81,40 @@ namespace Events.API.Controllers
         return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while adding participant");
       }
     }
-    
-    [HttpDelete("{userId:guid}")]
-    public async Task<IActionResult> DeleteInvitation( Guid invitationId,Guid eventId)
+
+    [HttpDelete("{invitationId}")]
+    public async Task<IActionResult> DeleteInvitation(int invitationId, int eventId)
     {
       try
       {
+        _logger.LogInformation($"Deleting a  invitation with {invitationId} for event {eventId}");
+
+        var eventExists = await _unitOfWork.EventRepository.GetEventById(eventId);
+        if (eventExists == null)
+        {
+          _logger.LogWarning($"Event with ID {eventId} not found.");
+          return NotFound(new { message = $"Event with ID {eventId} not found." });
+        }
         await _unitOfWork.InvitationRespository.DeleteInvitationAsync(invitationId);
-        await _unitOfWork.Complete();
+        var result = await _unitOfWork.Complete();
+        if (!result)
+        {
+          _logger.LogError("Failed to save changes to the database.");
+          return BadRequest(new { message = @$"Failed to delete invitation with Id {invitationId}from to the event with id {eventId} from the database" });
+        }
+
         _logger.LogInformation($"Invitation with ID {invitationId} has been successfully removed from event {eventId}.");
         return NoContent();
+      }
+      catch (ArgumentException ex)
+      {
+        _logger.LogError(ex, $"An error occurred while deleting invitation {invitationId} from event {eventId}");
+        return BadRequest(new { message = ex.Message });
+      }
+      catch (KeyNotFoundException ex)
+      {
+        _logger.LogError(ex, $"An error occurred while deleting invitation {invitationId} from event {eventId}");
+        return NotFound(new { message = ex.Message });
       }
       catch (Exception ex)
       {
@@ -76,26 +122,39 @@ namespace Events.API.Controllers
         return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while removing the participant");
       }
     }
-    
-    [HttpGet("{userId:guid}")]
-    public async Task<ActionResult<InvitationsDto>> GetInvitationById(Guid eventId, Guid invitationId)
+
+    [HttpGet("{invitationId}")]
+    public async Task<ActionResult<InvitationsDto>> GetInvitationById(int eventId, int invitationId)
     {
       try
       {
+        _logger.LogInformation($"Getting invitation with {invitationId} for event {eventId}");
+
+        var eventExists = await _unitOfWork.EventRepository.GetEventById(eventId);
+        if (eventExists == null)
+        {
+          _logger.LogWarning($"Event with ID {eventId} not found.");
+          return NotFound(new { message = $"Event with ID {eventId} not found." });
+        }
         var cacheKey = $"invitation_{eventId}_{invitationId}";
         if (!_cache.TryGetValue(cacheKey, out Invitation invitation))
         {
-          invitation = await _unitOfWork.InvitationRespository.GetInvitationByIdAsync(invitationId);
-          if (invitation == null)
-          {
-            return NotFound();
-          }
-
+          invitation = await _unitOfWork.InvitationRespository.GetInvitationByInvitationIdandEventIdAsync(invitationId, eventId);
           _cache.Set(cacheKey, invitation, TimeSpan.FromMinutes(1));
         }
 
         var invitationsDto = _mapper.Map<InvitationsDto>(invitation);
         return Ok(invitationsDto);
+      }
+      catch (ArgumentException ex)
+      {
+        _logger.LogError(ex, $"An error occurred while getting invitation {invitationId} for event {eventId}");
+        return BadRequest(new { message = ex.Message });
+      }
+      catch (KeyNotFoundException ex)
+      {
+        _logger.LogError(ex, $"An error occurred while getting invitation {invitationId} for event {eventId}");
+        return NotFound(new { message = ex.Message });
       }
       catch (Exception ex)
       {
@@ -103,55 +162,118 @@ namespace Events.API.Controllers
         return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while getting the participant");
       }
     }
-    
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateInvitationt( InvitationsDto invitationsDto, Guid eventId)
+
+    [HttpPut("{invitationId}")]
+    public async Task<IActionResult> UpdateInvitation(UpdateInvitation updateInvitation, int invitationId, int eventId)
     {
-      
       try
       {
+        _logger.LogInformation($"Updating invitation with {invitationId} for event {eventId}");
+
+        var eventExists = await _unitOfWork.EventRepository.GetEventById(eventId);
+        if (eventExists == null)
+        {
+          _logger.LogWarning($"Event with ID {eventId} not found.");
+          return NotFound(new { message = $"Event with ID {eventId} not found." });
+        }
         if (!ModelState.IsValid)
         {
           var errors = string.Join(", ", ModelState.Values
-            .SelectMany(v => v.Errors)
-            .Select(e => e.ErrorMessage));
+              .SelectMany(v => v.Errors)
+              .Select(e => e.ErrorMessage));
           _logger.LogInformation($"Validation errors occurred while updating invitation: {errors}");
-          _logger.LogInformation($"Invalid data received while updating invitation {invitationsDto.Id}");
+          _logger.LogInformation($"Invalid data received while updating invitation {invitationId}");
           return BadRequest(ModelState);
         }
 
-        var invitations = _mapper.Map<Invitation>(invitationsDto);
-        await _unitOfWork.InvitationRespository.UpdateInvitationAsync(invitations.Id, invitations.InviteState);
-        await _unitOfWork.Complete();
-        _logger.LogInformation($"Invitation with ID {invitations.Id} has been successfully updated.");
+        var invitation = await _unitOfWork.InvitationRespository.GetInvitationByInvitationIdandEventIdAsync(invitationId, eventId);
 
-        var particpant = new Participant(invitations.InvitedId,eventId);
-        await _unitOfWork.ParticipantRepository.RegisterParticipantAsync(particpant, eventId);
-        await _unitOfWork.Complete();
-        _logger.LogInformation($"Particpant with ID {particpant.Id} has been successfully registered for the Event {eventId}.");
+        if (invitation.InviteState == updateInvitation.InviteState)
+        {
+          _logger.LogInformation($"No change in invite state for invitation {invitationId}. No update needed.");
+          return BadRequest(new { message = $"No change in invite state for invitation {invitationId}. No update needed." });
+        }
 
+        invitation.InviteState = updateInvitation.InviteState;
+        await _unitOfWork.InvitationRespository.UpdateInvitationAsync(invitation);
+        var invitationResult = await _unitOfWork.Complete();
+
+        if (!invitationResult)
+        {
+          _logger.LogError($"An error occurred while updating invitation {invitationId}");
+          return BadRequest(new { message = $"An error occurred while updating invitation {invitationId}" });
+        }
+
+        _logger.LogInformation($"Invitation with ID {invitationId} has been successfully updated.");
+
+        if (invitation.InviteState != InvitationStatus.Accepted)
+          return NoContent();
+
+        var existingParticipant = await _unitOfWork.ParticipantRepository.GetParticipantByEventAndUserId(eventId, invitation.InvitedId);
+
+        if (existingParticipant != null)
+        {
+          _logger.LogError($"User with ID {invitation.InvitedId} is already a participant of event {eventId}.");
+          return BadRequest($"User with ID {invitation.InvitedId} is already a participant of event {eventId}.");
+        }
+
+        var participant = new Participant(invitation.InvitedId, eventId);
+        await _unitOfWork.ParticipantRepository.RegisterParticipantAsync(participant);
+        var participantResult = await _unitOfWork.Complete();
+
+        if (!participantResult)
+        {
+          _logger.LogError($"Unable to register participant with ID {participant.ParticipantId} for the event {eventId}.");
+          return BadRequest($"Unable to register participant with ID {participant.ParticipantId} for the event {eventId}.");
+        }
+
+        _logger.LogInformation($"Participant with ID {participant.ParticipantId} has been successfully registered for the event {eventId}.");
         return NoContent();
+      }
+      catch (ArgumentException ex)
+      {
+        _logger.LogError(ex, $"Invalid invitation ID {invitationId} while updating event {eventId}");
+        return BadRequest(new { message = ex.Message });
+      }
+      catch (KeyNotFoundException ex)
+      {
+        _logger.LogError(@$"Invitation ID {invitationId} not found for Event: {eventId}");
+        return NotFound(new { message = ex.Message + $@"not found for Event: {eventId}" });
       }
       catch (Exception ex)
       {
-        _logger.LogError(ex, $"An error occurred while updating invitation {invitationsDto.Id}");
+        _logger.LogError(ex, $"An error occurred while updating invitation {invitationId}");
         return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating the invitation");
       }
     }
+
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<InvitationsDto>>> GetAllInvitationsByEventId(Guid eventId, [FromQuery] int page = 1, [FromQuery] int pageSize = 5)
+    public async Task<ActionResult<IEnumerable<InvitationsDto>>> GetAllInvitationsByEventId(int eventId, [FromQuery] int page = 1, [FromQuery] int pageSize = 5)
     {
       try
       {
+        _logger.LogInformation($"Getting all invitations for event {eventId}");
+
+        var eventExists = await _unitOfWork.EventRepository.GetEventById(eventId);
+        if (eventExists == null)
+        {
+          _logger.LogWarning($"Event with ID {eventId} not found.");
+          return NotFound(new { message = $"Event with ID {eventId} not found." });
+        }
         var cacheKey = $"invitations_{eventId}_{page}_Size{pageSize}";
         if (!_cache.TryGetValue(cacheKey, out IEnumerable<Invitation> listInvitationsDtos))
         {
-          listInvitationsDtos = await _unitOfWork.InvitationRespository.GetInvitationsByEventIdAsync(eventId,page,pageSize);
+          listInvitationsDtos = await _unitOfWork.InvitationRespository.GetInvitationsByEventIdAsync(eventId, page, pageSize);
           _cache.Set(cacheKey, listInvitationsDtos, TimeSpan.FromMinutes(1));
         }
 
         var invitationsDtos = _mapper.Map<IEnumerable<InvitationsDto>>(listInvitationsDtos);
         return Ok(invitationsDtos);
+      }
+      catch (ArgumentException ex)
+      {
+        _logger.LogError(ex, $"An error occurred while getting all events");
+        return BadRequest(new { message = ex.Message });
       }
       catch (Exception ex)
       {

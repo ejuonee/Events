@@ -50,6 +50,7 @@ namespace Events.API.Data
         .WithOne()
         .HasForeignKey(i => i.EventId)
         .OnDelete(DeleteBehavior.Cascade);
+      
     }
 
   }

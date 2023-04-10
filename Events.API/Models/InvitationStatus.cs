@@ -6,4 +6,10 @@ namespace Events.API.Models
     Accepted,
     Declined
   }
+
+  public enum EventType
+  {
+    Online,
+    Offline
+  }
 }

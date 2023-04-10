@@ -19,13 +19,18 @@ namespace Events.API.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<ParticipantsDto>> AddParticipant(Guid eventId,
+    public async Task<ActionResult<ParticipantsDto>> AddParticipant(int eventId,
       [FromBody] RegisterParticipantsDto participantDto)
     {
       try
       {
         _logger.LogInformation($"Adding a new participant with {JsonSerializer.Serialize(participantDto)}");
-
+        var eventExists = await _unitOfWork.EventRepository.GetEventById(eventId);
+        if (eventExists == null)
+        {
+          _logger.LogWarning($"Event with ID {eventId} not found.");
+          return NotFound(new { message = $"Event with ID {eventId} not found." });
+        }
         if (!ModelState.IsValid)
         {
           var errors = string.Join(", ", ModelState.Values
@@ -38,15 +43,22 @@ namespace Events.API.Controllers
         }
 
         var participant = _mapper.Map<Participant>(participantDto);
-        await _unitOfWork.ParticipantRepository.RegisterParticipantAsync (participant,eventId);
-        await _unitOfWork.Complete();
+        participant.EventId = eventId;
+        await _unitOfWork.ParticipantRepository.RegisterParticipantAsync(participant);
+
+        var result = await _unitOfWork.Complete();
+        if (!result)
+        {
+          _logger.LogError("Failed to save changes to the database.");
+          return BadRequest(@$"An error occurred while registering participant {JsonSerializer.Serialize(participantDto)} to event {eventId}");
+        }
 
         var resultParticipantDto = _mapper.Map<ParticipantsDto>(participant);
 
         _logger.LogInformation($"Added a new participant with ID {participant.UserId} to event {eventId}");
 
         return CreatedAtAction(nameof(GetParticipantById),
-          new { eventId = eventId, userId = resultParticipantDto.UserId }, resultParticipantDto);
+          new { eventId = eventId, participantId = resultParticipantDto.ParticipantId }, resultParticipantDto);
       }
       catch (Exception ex)
       {
@@ -56,47 +68,71 @@ namespace Events.API.Controllers
       }
     }
 
-    [HttpGet("{userId:guid}")]
-    public async Task<ActionResult<ParticipantsDto>> GetParticipantById(Guid eventId, Guid userId)
+    [HttpGet("{participantId}")]
+    public async Task<ActionResult<ParticipantsDto>> GetParticipantById(int eventId, int participantId)
     {
       try
       {
-        var cacheKey = $"participant_{eventId}_{userId}";
+        _logger.LogInformation($"Getting participant with {participantId}");
+        var eventExists = await _unitOfWork.EventRepository.GetEventById(eventId);
+        if (eventExists == null)
+        {
+          _logger.LogWarning($"Event with ID {eventId} not found.");
+          return NotFound(new { message = $"Event with ID {eventId} not found." });
+        }
+        var cacheKey = $"participant_{eventId}_{participantId}";
         if (!_cache.TryGetValue(cacheKey, out Participant participant))
         {
-          participant = await _unitOfWork.ParticipantRepository.GetParticipantByIdAsync(eventId, userId);
-          if (participant == null)
-          {
-            return NotFound();
-          }
-
+          participant = await _unitOfWork.ParticipantRepository.GetParticipantByIdAsync(participantId, eventId);
           _cache.Set(cacheKey, participant, TimeSpan.FromMinutes(1));
         }
 
         var participantDto = _mapper.Map<ParticipantsDto>(participant);
         return Ok(participantDto);
       }
+      catch (ArgumentException ex)
+      {
+        _logger.LogError(ex, $"An error occurred while getting participant {participantId} from event {eventId}");
+        return BadRequest(new { message = ex.Message });
+      }
+      catch (KeyNotFoundException ex)
+      {
+        _logger.LogError(ex, $"An error occurred while getting participant {participantId} from event {eventId}");
+        return NotFound(new { message = ex.Message });
+      }
       catch (Exception ex)
       {
-        _logger.LogError(ex, $"An error occurred while getting participant {userId} for event {eventId}");
+        _logger.LogError(ex, $"An error occurred while getting participant {participantId} for event {eventId}");
         return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while getting the participant");
       }
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ParticipantsDto>>> GetParticipantsByEventId(Guid eventId, [FromQuery] int page, [FromQuery]int size)
+    public async Task<ActionResult<IEnumerable<ParticipantsDto>>> GetParticipantsByEventId(int eventId, [FromQuery] int page, [FromQuery] int size)
     {
       try
       {
+        _logger.LogInformation($"Getting participants for event with Id {eventId}");
+        var eventExists = await _unitOfWork.EventRepository.GetEventById(eventId);
+        if (eventExists == null)
+        {
+          _logger.LogWarning($"Event with ID {eventId} not found.");
+          return NotFound(new { message = $"Event with ID {eventId} not found." });
+        }
         var cacheKey = $"participants_{eventId}";
         if (!_cache.TryGetValue(cacheKey, out IEnumerable<Participant> participants))
         {
-          participants = await _unitOfWork.ParticipantRepository.GetParticipantsByEventIdAsync(eventId,page,size);
+          participants = await _unitOfWork.ParticipantRepository.GetParticipantsByEventIdAsync(eventId, page, size);
           _cache.Set(cacheKey, participants, TimeSpan.FromMinutes(1));
         }
 
         var participantsDto = _mapper.Map<IEnumerable<ParticipantsDto>>(participants);
         return Ok(participantsDto);
+      }
+      catch (ArgumentException ex)
+      {
+        _logger.LogError(ex, $"An error occurred while getting all participant for event {eventId}");
+        return BadRequest(new { message = ex.Message });
       }
       catch (Exception ex)
       {
@@ -106,28 +142,58 @@ namespace Events.API.Controllers
       }
     }
 
-    [HttpDelete("{userId:guid}")]
-    public async Task<IActionResult> RemoveParticipant(Guid eventId, Guid userId)
+    [HttpDelete("{participantId}")]
+    public async Task<IActionResult> RemoveParticipant(int eventId, int participantId)
     {
       try
       {
-        await _unitOfWork.ParticipantRepository.RemoveParticipantAsync(eventId, userId);
-        await _unitOfWork.Complete();
-        _logger.LogInformation($"Participant with ID {userId} has been successfully removed from event {eventId}.");
+        _logger.LogInformation($"Deleting participant with {participantId}");
+        var eventExists = await _unitOfWork.EventRepository.GetEventById(eventId);
+        if (eventExists == null)
+        {
+          _logger.LogWarning($"Event with ID {eventId} not found.");
+          return NotFound(new { message = $"Event with ID {eventId} not found." });
+        }
+        await _unitOfWork.ParticipantRepository.RemoveParticipantAsync(participantId, eventId);
+        var result = await _unitOfWork.Complete();
+        if (!result)
+        {
+          _logger.LogError("Failed to save changes to the database.");
+          return BadRequest(@$"Failed to delete participant with Id {participantId}from to the database");
+        }
+
+        _logger.LogInformation($"Participant with ID {participantId} has been successfully removed from event {eventId}.");
         return NoContent();
+      }
+      catch (ArgumentException ex)
+      {
+        _logger.LogError(ex, $"Invalid Particpant ID {participantId} or  event ID {eventId} while deleting participant");
+        return BadRequest(new { message = ex.Message });
+      }
+      catch (KeyNotFoundException ex)
+      {
+        _logger.LogError(@$"Participant not found for ID: {participantId}");
+        return NotFound(new { message = ex.Message });
       }
       catch (Exception ex)
       {
-        _logger.LogError(ex, $"An error occurred while removing participant {userId} from event {eventId}");
+        _logger.LogError(ex, $"An error occurred while removing participant {participantId} from event {eventId}");
         return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while removing the participant");
       }
     }
     [HttpPost("bulk")]
-    public async Task<ActionResult<IEnumerable<ParticipantsDto>>> RegisterParticipants(Guid eventId, [FromBody] List<RegisterParticipantsDto> participantDtos)
+    public async Task<ActionResult<IEnumerable<ParticipantsDto>>> RegisterParticipants(int eventId, [FromBody] List<RegisterParticipantsDto> participantDtos)
     {
       try
       {
         _logger.LogInformation($"Registering multiple participants for event {eventId}: {JsonSerializer.Serialize(participantDtos)}");
+        // Check if the event exists
+        var eventExists = await _unitOfWork.EventRepository.GetEventById(eventId);
+        if (eventExists == null)
+        {
+          _logger.LogWarning($"Event with ID {eventId} not found.");
+          return NotFound(new { message = $"Event with ID {eventId} not found." });
+        }
 
         if (!ModelState.IsValid)
         {
@@ -140,13 +206,41 @@ namespace Events.API.Controllers
         }
 
         var participants = _mapper.Map<List<Participant>>(participantDtos);
-        await _unitOfWork.ParticipantRepository.RegisterParticipantsAsync(participants,eventId);
-        await _unitOfWork.Complete();
+        participants.ForEach(p => p.EventId = eventId);
+        var failedParticipants = await _unitOfWork.ParticipantRepository.RegisterParticipantsAsync(participants);
+        if (participants.Count != failedParticipants.Count)
+        {
+          var result = await _unitOfWork.Complete();
 
+          if (!result)
+          {
+            _logger.LogError("Failed to save changes to the database.");
+            return BadRequest(@$"An error occurred while registering participants {JsonSerializer.Serialize(participants)} to event {eventId}");
+          }
+        }
+        if (failedParticipants.Count > 0)
+        {
+          _logger.LogError($"Failed to register these participants {JsonSerializer.Serialize(failedParticipants)} for event {eventId}");
+          return StatusCode(StatusCodes.Status206PartialContent, new
+          {
+            Message = "Some Participants were not registered either because they have been registered or they are not users in the database",
+            FailedParticipants = failedParticipants
+          });
+        }
         var resultParticipantDtos = _mapper.Map<IEnumerable<ParticipantsDto>>(participants);
         _logger.LogInformation($"Registered multiple participants for event {eventId}");
 
         return CreatedAtAction(nameof(GetParticipantsByEventId), new { eventId = eventId }, resultParticipantDtos);
+      }
+      catch (ArgumentException ex)
+      {
+        _logger.LogError(ex, $"Invalid event ID while updating event {eventId}");
+        return BadRequest(new { message = ex.Message });
+      }
+      catch (KeyNotFoundException ex)
+      {
+        _logger.LogError(@$"Event not found for ID: {eventId}");
+        return NotFound(new { message = ex.Message });
       }
       catch (Exception ex)
       {
@@ -155,7 +249,7 @@ namespace Events.API.Controllers
       }
     }
 
-    
+
   }
 }
 

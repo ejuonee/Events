@@ -21,17 +21,18 @@ namespace Events.API.Models
       LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
       UserName = userName ?? throw new ArgumentNullException(nameof(userName));
       Email = email;
-      OwnedEvents = ownedEvents ?? throw new ArgumentNullException(nameof(ownedEvents));;
+      OwnedEvents = ownedEvents ?? throw new ArgumentNullException(nameof(ownedEvents)); ;
       RegisteredEvents = registeredEvents ?? throw new ArgumentNullException(nameof(registeredEvents));
-      Invites = invites ?? throw new ArgumentNullException(nameof(invites));;
+      Invites = invites ?? throw new ArgumentNullException(nameof(invites)); ;
     }
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
+    public int UserId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string UserName { get; set; }
     public string? Email { get; set; }
     public ICollection<Event>? OwnedEvents { get; set; }
+    [JsonPropertyName("ParticipantEvents")]
     public ICollection<Participant> RegisteredEvents { get; set; }
 
     public ICollection<Invitation> Invites { get; set; }

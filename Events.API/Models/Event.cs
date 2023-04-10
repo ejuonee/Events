@@ -4,14 +4,16 @@ namespace Events.API.Models
 {
   public class Event
   {
-    public Event( Guid ownerId, string title, string description, DateTime startDate, DateTime endDate,
-      User owner, ICollection<Participant> participants, ICollection<Invitation> invites)
+    public Event(int ownerId, string title, string description, DateTime startDate, DateTime endDate,
+      User owner, string location,EventType eventType,ICollection<Participant> participants, ICollection<Invitation> invites)
     {
       OwnerId = ownerId;
       Title = title ?? throw new ArgumentNullException(nameof(title));
       Description = description;
-      StartDate = startDate ;
+      StartDate = startDate;
       EndDate = endDate;
+      Location = location;
+      EventType = eventType;
       Participants = participants ?? throw new ArgumentNullException(nameof(participants));
       Invites = invites ?? throw new ArgumentNullException(nameof(invites));
     }
@@ -24,10 +26,15 @@ namespace Events.API.Models
     }
 
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
-    public Guid OwnerId { get; set; }
+    public int EventId { get; set; }
+    public int OwnerId { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
+    
+    public string Location { get; set; }
+    
+    public EventType EventType { get; set; }
+    
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public ICollection<Participant> Participants { get; set; }

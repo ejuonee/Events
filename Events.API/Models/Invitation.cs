@@ -2,11 +2,13 @@ namespace Events.API.Models
 {
   public class Invitation
   {
-    public Invitation(Guid eventId, Guid invitedId, InvitationStatus inviteState)
+    public Invitation(int eventId, int invitedId, InvitationStatus inviteState, string invitationMessage, string inviterUserName)
     {
       EventId = eventId;
       InvitedId = invitedId;
       InviteState = inviteState;
+      InvitationMessage = invitationMessage;
+      InviterUserName = inviterUserName;
     }
 
     public Invitation()
@@ -14,9 +16,11 @@ namespace Events.API.Models
     }
 
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
-    public Guid EventId { get; set; }
-    public Guid InvitedId { get; set; }
+    public int InvitationId { get; set; }
+    public int EventId { get; set; }
+    public int InvitedId { get; set; }
+    public string InvitationMessage { get; set; }
+    public string InviterUserName { get; set; }
     public InvitationStatus InviteState { get; set; }
   }
 
