@@ -1,8 +1,3 @@
-
-
-var filename = "UserSeedData.json";
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 //Adding Logging 

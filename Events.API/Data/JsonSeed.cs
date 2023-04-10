@@ -61,7 +61,7 @@ public class JsonSeed
       var usersString = JsonSerializer.Serialize(userDtoLite,
           new JsonSerializerOptions { WriteIndented = true, ReferenceHandler = ReferenceHandler.Preserve });
 
-      await File.WriteAllTextAsync("./Data/UserDataSeed.json", usersString);
+      await File.WriteAllTextAsync("UserDataSeed.json", usersString);
 
       _logger.LogInformation(@$"Database export to JSON file completed: UserDataSeed.json");
     }
@@ -77,7 +77,7 @@ public class JsonSeed
     {
       _logger.LogInformation(@$"Seeding database from JSON file: UserDataSeed.json");
 
-      var jsonString = await File.ReadAllTextAsync("./Data/UserDataSeed.json");
+      var jsonString = await File.ReadAllTextAsync("UserDataSeed.json");
 
       var userDtoLite = JsonSerializer.Deserialize<IEnumerable<UsersExportDto>>(jsonString, new JsonSerializerOptions
       {
