@@ -48,5 +48,9 @@ docker compose up
 cd Events.API/Data/
 FileName UserDataSeed.json
 </pre>
+<p>However this would not be visible in the docker container and would throw errors in the logs however the application would still run so it is advisable to build it first before container ochestration</p>
 
 <p>After your API is ready for test</p>
+
+<p>The Swagger Documentation can be found</p>
+<pre> http://localhost:5006/swagger/index.html</pre>
