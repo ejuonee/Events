@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  events_api:
+    container_name: events_api
+    build:
+      context: .
+      dockerfile: Events.API/Dockerfile
+    ports:
+      - "5006:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
