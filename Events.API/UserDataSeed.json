@@ -1,0 +1,1065 @@
+{
+  "$id": "1",
+  "$values": [
+    {
+      "$id": "2",
+      "UserId": 1,
+      "FirstName": "Melyna",
+      "LastName": "Raynor",
+      "UserName": "Melyna_Raynor0",
+      "Email": "Melyna29@hotmail.com",
+      "OwnedEvents": {
+        "$id": "3",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "4",
+        "$values": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "5",
+        "$values": [
+          {
+            "$id": "6",
+            "InvitationId": 21,
+            "EventId": 4,
+            "InvitedId": 1,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Rerum aut iure necessitatibus.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "7",
+      "UserId": 2,
+      "FirstName": "Anabelle",
+      "LastName": "Rolfson",
+      "UserName": "Anabelle94",
+      "Email": "Anabelle.Rolfson@hotmail.com",
+      "OwnedEvents": {
+        "$id": "8",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "9",
+        "$values": [
+          0,
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "10",
+        "$values": [
+          {
+            "$id": "11",
+            "InvitationId": 14,
+            "EventId": 3,
+            "InvitedId": 2,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Ipsam harum rerum delectus.."
+          },
+          {
+            "$id": "12",
+            "InvitationId": 28,
+            "EventId": 5,
+            "InvitedId": 2,
+            "InviteState": 0,
+            "InviterUserName": "Cheyenne_Wiza1",
+            "InvitationMessage": "Cheyenne_Wiza1 has invited you to Adipisci nihil sit hic deserunt sint maxime aut.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "13",
+      "UserId": 3,
+      "FirstName": "Lavon",
+      "LastName": "Hermann",
+      "UserName": "Lavon8",
+      "Email": "Lavon.Hermann@gmail.com",
+      "OwnedEvents": {
+        "$id": "14",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "15",
+        "$values": [
+          0,
+          0,
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "16",
+        "$values": [
+          {
+            "$id": "17",
+            "InvitationId": 1,
+            "EventId": 1,
+            "InvitedId": 3,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Iusto molestiae quia eius.."
+          },
+          {
+            "$id": "18",
+            "InvitationId": 8,
+            "EventId": 2,
+            "InvitedId": 3,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Quia dolores sed vitae ipsam quidem.."
+          },
+          {
+            "$id": "19",
+            "InvitationId": 33,
+            "EventId": 6,
+            "InvitedId": 3,
+            "InviteState": 0,
+            "InviterUserName": "Bernice71",
+            "InvitationMessage": "Bernice71 has invited you to Impedit quod dignissimos illo est.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "20",
+      "UserId": 4,
+      "FirstName": "Gunnar",
+      "LastName": "Doyle",
+      "UserName": "Gunnar_Doyle",
+      "Email": "Gunnar.Doyle@gmail.com",
+      "OwnedEvents": {
+        "$id": "21",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "22",
+        "$values": [
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "23",
+        "$values": [
+          {
+            "$id": "24",
+            "InvitationId": 2,
+            "EventId": 1,
+            "InvitedId": 4,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Iusto molestiae quia eius.."
+          },
+          {
+            "$id": "25",
+            "InvitationId": 9,
+            "EventId": 2,
+            "InvitedId": 4,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Quia dolores sed vitae ipsam quidem.."
+          },
+          {
+            "$id": "26",
+            "InvitationId": 38,
+            "EventId": 7,
+            "InvitedId": 4,
+            "InviteState": 0,
+            "InviterUserName": "Bernice71",
+            "InvitationMessage": "Bernice71 has invited you to Et animi voluptatem.."
+          },
+          {
+            "$id": "27",
+            "InvitationId": 42,
+            "EventId": 8,
+            "InvitedId": 4,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Rerum aut doloribus aut voluptas cum laboriosam.."
+          },
+          {
+            "$id": "28",
+            "InvitationId": 49,
+            "EventId": 9,
+            "InvitedId": 4,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Vel fugiat explicabo totam iure repudiandae libero.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "29",
+      "UserId": 5,
+      "FirstName": "Drake",
+      "LastName": "Orn",
+      "UserName": "Drake.Orn98",
+      "Email": "Drake.Orn@gmail.com",
+      "OwnedEvents": {
+        "$id": "30",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "31",
+        "$values": [
+          0,
+          0,
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "32",
+        "$values": [
+          {
+            "$id": "33",
+            "InvitationId": 22,
+            "EventId": 4,
+            "InvitedId": 5,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Rerum aut iure necessitatibus.."
+          },
+          {
+            "$id": "34",
+            "InvitationId": 34,
+            "EventId": 6,
+            "InvitedId": 5,
+            "InviteState": 0,
+            "InviterUserName": "Bernice71",
+            "InvitationMessage": "Bernice71 has invited you to Impedit quod dignissimos illo est.."
+          },
+          {
+            "$id": "35",
+            "InvitationId": 43,
+            "EventId": 8,
+            "InvitedId": 5,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Rerum aut doloribus aut voluptas cum laboriosam.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "36",
+      "UserId": 6,
+      "FirstName": "Rodrick",
+      "LastName": "VonRueden",
+      "UserName": "Rodrick.VonRueden3",
+      "Email": "Rodrick.VonRueden37@hotmail.com",
+      "OwnedEvents": {
+        "$id": "37",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "38",
+        "$values": [
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "39",
+        "$values": [
+          {
+            "$id": "40",
+            "InvitationId": 15,
+            "EventId": 3,
+            "InvitedId": 6,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Ipsam harum rerum delectus.."
+          },
+          {
+            "$id": "41",
+            "InvitationId": 23,
+            "EventId": 4,
+            "InvitedId": 6,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Rerum aut iure necessitatibus.."
+          },
+          {
+            "$id": "42",
+            "InvitationId": 29,
+            "EventId": 5,
+            "InvitedId": 6,
+            "InviteState": 0,
+            "InviterUserName": "Cheyenne_Wiza1",
+            "InvitationMessage": "Cheyenne_Wiza1 has invited you to Adipisci nihil sit hic deserunt sint maxime aut.."
+          },
+          {
+            "$id": "43",
+            "InvitationId": 35,
+            "EventId": 6,
+            "InvitedId": 6,
+            "InviteState": 0,
+            "InviterUserName": "Bernice71",
+            "InvitationMessage": "Bernice71 has invited you to Impedit quod dignissimos illo est.."
+          },
+          {
+            "$id": "44",
+            "InvitationId": 44,
+            "EventId": 8,
+            "InvitedId": 6,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Rerum aut doloribus aut voluptas cum laboriosam.."
+          },
+          {
+            "$id": "45",
+            "InvitationId": 50,
+            "EventId": 9,
+            "InvitedId": 6,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Vel fugiat explicabo totam iure repudiandae libero.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "46",
+      "UserId": 7,
+      "FirstName": "Noemie",
+      "LastName": "Lemke",
+      "UserName": "Noemie25",
+      "Email": "Noemie74@gmail.com",
+      "OwnedEvents": {
+        "$id": "47",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "48",
+        "$values": []
+      },
+      "Invites": {
+        "$id": "49",
+        "$values": [
+          {
+            "$id": "50",
+            "InvitationId": 45,
+            "EventId": 8,
+            "InvitedId": 7,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Rerum aut doloribus aut voluptas cum laboriosam.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "51",
+      "UserId": 8,
+      "FirstName": "Ashlynn",
+      "LastName": "Bayer",
+      "UserName": "Ashlynn.Bayer80",
+      "Email": "Ashlynn.Bayer@gmail.com",
+      "OwnedEvents": {
+        "$id": "52",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "53",
+        "$values": [
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "54",
+        "$values": [
+          {
+            "$id": "55",
+            "InvitationId": 3,
+            "EventId": 1,
+            "InvitedId": 8,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Iusto molestiae quia eius.."
+          },
+          {
+            "$id": "56",
+            "InvitationId": 24,
+            "EventId": 4,
+            "InvitedId": 8,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Rerum aut iure necessitatibus.."
+          },
+          {
+            "$id": "57",
+            "InvitationId": 46,
+            "EventId": 8,
+            "InvitedId": 8,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Rerum aut doloribus aut voluptas cum laboriosam.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "58",
+      "UserId": 9,
+      "FirstName": "Rylan",
+      "LastName": "Kunze",
+      "UserName": "Rylan33",
+      "Email": "Rylan_Kunze83@gmail.com",
+      "OwnedEvents": {
+        "$id": "59",
+        "$values": [
+          {
+            "$id": "60",
+            "EventId": 1,
+            "OwnerId": 9,
+            "Title": "Iusto molestiae quia eius.",
+            "Description": "Expedita ducimus voluptate quia aliquam. Qui dicta suscipit. Et culpa aut voluptas ullam. Sed magnam autem numquam quia aut. Quam nesciunt nemo consequuntur eos tempore iste aperiam dolorem.",
+            "StartDate": "2024-01-13T21:04:16.0513871",
+            "EndDate": "2024-02-01T01:00:01.9089068",
+            "Location": "9108 Watsica Mountain, Waterschester, Argentina",
+            "EventType": 1
+          },
+          {
+            "$id": "61",
+            "EventId": 2,
+            "OwnerId": 9,
+            "Title": "Quia dolores sed vitae ipsam quidem.",
+            "Description": "Assumenda laudantium voluptatem consequatur voluptatibus. Reprehenderit molestias id aut in. Adipisci eveniet quam reiciendis vel quis vero. Similique nisi nesciunt ab aut eos est.",
+            "StartDate": "2024-02-06T00:59:28.8328587",
+            "EndDate": "2024-09-21T16:02:00.0341866",
+            "Location": "54229 McLaughlin Land, East Kristopherhaven, Cote d\u0027Ivoire",
+            "EventType": 1
+          }
+        ]
+      },
+      "ParticipantEvents": {
+        "$id": "62",
+        "$values": [
+          0,
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "63",
+        "$values": [
+          {
+            "$id": "64",
+            "InvitationId": 47,
+            "EventId": 8,
+            "InvitedId": 9,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Rerum aut doloribus aut voluptas cum laboriosam.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "65",
+      "UserId": 10,
+      "FirstName": "Hudson",
+      "LastName": "Mante",
+      "UserName": "Hudson_Mante",
+      "Email": "Hudson.Mante31@hotmail.com",
+      "OwnedEvents": {
+        "$id": "66",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "67",
+        "$values": [
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "68",
+        "$values": [
+          {
+            "$id": "69",
+            "InvitationId": 39,
+            "EventId": 7,
+            "InvitedId": 10,
+            "InviteState": 0,
+            "InviterUserName": "Bernice71",
+            "InvitationMessage": "Bernice71 has invited you to Et animi voluptatem.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "70",
+      "UserId": 11,
+      "FirstName": "Maxime",
+      "LastName": "Aufderhar",
+      "UserName": "Maxime_Aufderhar29",
+      "Email": "Maxime_Aufderhar77@hotmail.com",
+      "OwnedEvents": {
+        "$id": "71",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "72",
+        "$values": [
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "73",
+        "$values": [
+          {
+            "$id": "74",
+            "InvitationId": 10,
+            "EventId": 2,
+            "InvitedId": 11,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Quia dolores sed vitae ipsam quidem.."
+          },
+          {
+            "$id": "75",
+            "InvitationId": 30,
+            "EventId": 5,
+            "InvitedId": 11,
+            "InviteState": 0,
+            "InviterUserName": "Cheyenne_Wiza1",
+            "InvitationMessage": "Cheyenne_Wiza1 has invited you to Adipisci nihil sit hic deserunt sint maxime aut.."
+          },
+          {
+            "$id": "76",
+            "InvitationId": 36,
+            "EventId": 6,
+            "InvitedId": 11,
+            "InviteState": 0,
+            "InviterUserName": "Bernice71",
+            "InvitationMessage": "Bernice71 has invited you to Impedit quod dignissimos illo est.."
+          },
+          {
+            "$id": "77",
+            "InvitationId": 40,
+            "EventId": 7,
+            "InvitedId": 11,
+            "InviteState": 0,
+            "InviterUserName": "Bernice71",
+            "InvitationMessage": "Bernice71 has invited you to Et animi voluptatem.."
+          },
+          {
+            "$id": "78",
+            "InvitationId": 51,
+            "EventId": 9,
+            "InvitedId": 11,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Vel fugiat explicabo totam iure repudiandae libero.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "79",
+      "UserId": 12,
+      "FirstName": "Bonita",
+      "LastName": "Abshire",
+      "UserName": "Bonita58",
+      "Email": "Bonita_Abshire81@gmail.com",
+      "OwnedEvents": {
+        "$id": "80",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "81",
+        "$values": [
+          0,
+          0,
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "82",
+        "$values": [
+          {
+            "$id": "83",
+            "InvitationId": 16,
+            "EventId": 3,
+            "InvitedId": 12,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Ipsam harum rerum delectus.."
+          },
+          {
+            "$id": "84",
+            "InvitationId": 48,
+            "EventId": 8,
+            "InvitedId": 12,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Rerum aut doloribus aut voluptas cum laboriosam.."
+          },
+          {
+            "$id": "85",
+            "InvitationId": 52,
+            "EventId": 9,
+            "InvitedId": 12,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Vel fugiat explicabo totam iure repudiandae libero.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "86",
+      "UserId": 13,
+      "FirstName": "Dayton",
+      "LastName": "Lueilwitz",
+      "UserName": "Dayton94",
+      "Email": "Dayton.Lueilwitz@hotmail.com",
+      "OwnedEvents": {
+        "$id": "87",
+        "$values": [
+          {
+            "$id": "88",
+            "EventId": 3,
+            "OwnerId": 13,
+            "Title": "Ipsam harum rerum delectus.",
+            "Description": "Soluta ex pariatur ea aut quo. Et aut aliquam inventore deleniti sed unde veniam consequatur. Nulla impedit sed suscipit omnis sed molestiae.",
+            "StartDate": "2023-12-17T17:56:58.7997051",
+            "EndDate": "2024-12-14T19:58:14.1108361",
+            "Location": "607 Dayana Valley, Armstrongview, Anguilla",
+            "EventType": 1
+          },
+          {
+            "$id": "89",
+            "EventId": 4,
+            "OwnerId": 13,
+            "Title": "Rerum aut iure necessitatibus.",
+            "Description": "Quasi accusamus ut ullam illo blanditiis aut omnis. Quibusdam quam a omnis aut. Voluptas ipsam beatae.",
+            "StartDate": "2024-02-11T01:13:34.3668821",
+            "EndDate": "2024-04-08T12:22:56.2206718",
+            "Location": "05439 Gilda Parkway, South Tobyfort, Australia",
+            "EventType": 1
+          }
+        ]
+      },
+      "ParticipantEvents": {
+        "$id": "90",
+        "$values": [
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "91",
+        "$values": [
+          {
+            "$id": "92",
+            "InvitationId": 11,
+            "EventId": 2,
+            "InvitedId": 13,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Quia dolores sed vitae ipsam quidem.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "93",
+      "UserId": 14,
+      "FirstName": "Gunnar",
+      "LastName": "Mitchell",
+      "UserName": "Gunnar_Mitchell",
+      "Email": "Gunnar_Mitchell@yahoo.com",
+      "OwnedEvents": {
+        "$id": "94",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "95",
+        "$values": [
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "96",
+        "$values": [
+          {
+            "$id": "97",
+            "InvitationId": 17,
+            "EventId": 3,
+            "InvitedId": 14,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Ipsam harum rerum delectus.."
+          },
+          {
+            "$id": "98",
+            "InvitationId": 53,
+            "EventId": 9,
+            "InvitedId": 14,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Vel fugiat explicabo totam iure repudiandae libero.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "99",
+      "UserId": 15,
+      "FirstName": "Colby",
+      "LastName": "Baumbach",
+      "UserName": "Colby_Baumbach65",
+      "Email": "Colby29@gmail.com",
+      "OwnedEvents": {
+        "$id": "100",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "101",
+        "$values": []
+      },
+      "Invites": {
+        "$id": "102",
+        "$values": [
+          {
+            "$id": "103",
+            "InvitationId": 4,
+            "EventId": 1,
+            "InvitedId": 15,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Iusto molestiae quia eius.."
+          },
+          {
+            "$id": "104",
+            "InvitationId": 12,
+            "EventId": 2,
+            "InvitedId": 15,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Quia dolores sed vitae ipsam quidem.."
+          },
+          {
+            "$id": "105",
+            "InvitationId": 18,
+            "EventId": 3,
+            "InvitedId": 15,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Ipsam harum rerum delectus.."
+          },
+          {
+            "$id": "106",
+            "InvitationId": 31,
+            "EventId": 5,
+            "InvitedId": 15,
+            "InviteState": 0,
+            "InviterUserName": "Cheyenne_Wiza1",
+            "InvitationMessage": "Cheyenne_Wiza1 has invited you to Adipisci nihil sit hic deserunt sint maxime aut.."
+          },
+          {
+            "$id": "107",
+            "InvitationId": 37,
+            "EventId": 6,
+            "InvitedId": 15,
+            "InviteState": 0,
+            "InviterUserName": "Bernice71",
+            "InvitationMessage": "Bernice71 has invited you to Impedit quod dignissimos illo est.."
+          },
+          {
+            "$id": "108",
+            "InvitationId": 41,
+            "EventId": 7,
+            "InvitedId": 15,
+            "InviteState": 0,
+            "InviterUserName": "Bernice71",
+            "InvitationMessage": "Bernice71 has invited you to Et animi voluptatem.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "109",
+      "UserId": 16,
+      "FirstName": "Cheyenne",
+      "LastName": "Wiza",
+      "UserName": "Cheyenne_Wiza1",
+      "Email": "Cheyenne43@yahoo.com",
+      "OwnedEvents": {
+        "$id": "110",
+        "$values": [
+          {
+            "$id": "111",
+            "EventId": 5,
+            "OwnerId": 16,
+            "Title": "Adipisci nihil sit hic deserunt sint maxime aut.",
+            "Description": "Labore sunt sunt quas assumenda ut ut totam dolor. Excepturi sit porro laboriosam excepturi similique placeat vel impedit temporibus. Velit odio et consequatur aspernatur numquam quas adipisci. Sunt quis facere ut vero commodi nemo.",
+            "StartDate": "2024-03-03T11:11:17.7226256",
+            "EndDate": "2024-11-05T03:08:42.3161382",
+            "Location": "798 Bergstrom Course, Lake Hermannview, Lao People\u0027s Democratic Republic",
+            "EventType": 0
+          }
+        ]
+      },
+      "ParticipantEvents": {
+        "$id": "112",
+        "$values": [
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "113",
+        "$values": [
+          {
+            "$id": "114",
+            "InvitationId": 5,
+            "EventId": 1,
+            "InvitedId": 16,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Iusto molestiae quia eius.."
+          },
+          {
+            "$id": "115",
+            "InvitationId": 19,
+            "EventId": 3,
+            "InvitedId": 16,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Ipsam harum rerum delectus.."
+          },
+          {
+            "$id": "116",
+            "InvitationId": 54,
+            "EventId": 9,
+            "InvitedId": 16,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Vel fugiat explicabo totam iure repudiandae libero.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "117",
+      "UserId": 17,
+      "FirstName": "Gaetano",
+      "LastName": "Bayer",
+      "UserName": "Gaetano61",
+      "Email": "Gaetano.Bayer@yahoo.com",
+      "OwnedEvents": {
+        "$id": "118",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "119",
+        "$values": [
+          0
+        ]
+      },
+      "Invites": {
+        "$id": "120",
+        "$values": [
+          {
+            "$id": "121",
+            "InvitationId": 25,
+            "EventId": 4,
+            "InvitedId": 17,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Rerum aut iure necessitatibus.."
+          },
+          {
+            "$id": "122",
+            "InvitationId": 55,
+            "EventId": 9,
+            "InvitedId": 17,
+            "InviteState": 0,
+            "InviterUserName": "Kaitlin88",
+            "InvitationMessage": "Kaitlin88 has invited you to Vel fugiat explicabo totam iure repudiandae libero.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "123",
+      "UserId": 18,
+      "FirstName": "Bernice",
+      "LastName": "Mayert",
+      "UserName": "Bernice71",
+      "Email": "Bernice.Mayert93@gmail.com",
+      "OwnedEvents": {
+        "$id": "124",
+        "$values": [
+          {
+            "$id": "125",
+            "EventId": 6,
+            "OwnerId": 18,
+            "Title": "Impedit quod dignissimos illo est.",
+            "Description": "Assumenda saepe placeat asperiores. Vero minus error hic fugit consectetur repellendus cum. Aut qui asperiores aut. Omnis optio maxime. Assumenda quae minus quia tenetur.",
+            "StartDate": "2023-04-14T13:00:37.6470446",
+            "EndDate": "2023-05-31T07:29:53.7806544",
+            "Location": "111 Becker Circles, Dickiview, Ghana",
+            "EventType": 0
+          },
+          {
+            "$id": "126",
+            "EventId": 7,
+            "OwnerId": 18,
+            "Title": "Et animi voluptatem.",
+            "Description": "A magnam architecto non. Nemo sunt officia similique sed iure nisi. Labore tempora repellat officia minus perspiciatis quibusdam voluptas quia. Et doloremque animi error sed eaque. Quis rerum sed eum.",
+            "StartDate": "2024-02-09T11:14:59.6799826",
+            "EndDate": "2024-12-25T04:14:13.841702",
+            "Location": "947 Odessa Vista, Ervinborough, Sri Lanka",
+            "EventType": 1
+          }
+        ]
+      },
+      "ParticipantEvents": {
+        "$id": "127",
+        "$values": []
+      },
+      "Invites": {
+        "$id": "128",
+        "$values": [
+          {
+            "$id": "129",
+            "InvitationId": 6,
+            "EventId": 1,
+            "InvitedId": 18,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Iusto molestiae quia eius.."
+          },
+          {
+            "$id": "130",
+            "InvitationId": 20,
+            "EventId": 3,
+            "InvitedId": 18,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Ipsam harum rerum delectus.."
+          },
+          {
+            "$id": "131",
+            "InvitationId": 26,
+            "EventId": 4,
+            "InvitedId": 18,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Rerum aut iure necessitatibus.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "132",
+      "UserId": 19,
+      "FirstName": "Kaitlin",
+      "LastName": "Feeney",
+      "UserName": "Kaitlin88",
+      "Email": "Kaitlin_Feeney@yahoo.com",
+      "OwnedEvents": {
+        "$id": "133",
+        "$values": [
+          {
+            "$id": "134",
+            "EventId": 8,
+            "OwnerId": 19,
+            "Title": "Rerum aut doloribus aut voluptas cum laboriosam.",
+            "Description": "Nostrum doloribus qui molestiae doloremque. Ut culpa molestias voluptatum necessitatibus autem. Dolorem voluptas assumenda porro excepturi.",
+            "StartDate": "2023-10-26T09:03:21.2529087",
+            "EndDate": "2024-07-27T00:29:08.5746172",
+            "Location": "05071 Michel Valleys, Bernhardchester, Algeria",
+            "EventType": 1
+          },
+          {
+            "$id": "135",
+            "EventId": 9,
+            "OwnerId": 19,
+            "Title": "Vel fugiat explicabo totam iure repudiandae libero.",
+            "Description": "Quibusdam quas impedit. Eius maiores aut. Sunt quas nesciunt sit facilis repellat et expedita quis. Necessitatibus neque alias natus iure voluptas deleniti.",
+            "StartDate": "2024-01-05T23:15:44.9194214",
+            "EndDate": "2024-05-29T03:34:36.9863986",
+            "Location": "40417 Camryn Plaza, Ratkeburgh, Malta",
+            "EventType": 1
+          }
+        ]
+      },
+      "ParticipantEvents": {
+        "$id": "136",
+        "$values": []
+      },
+      "Invites": {
+        "$id": "137",
+        "$values": [
+          {
+            "$id": "138",
+            "InvitationId": 27,
+            "EventId": 4,
+            "InvitedId": 19,
+            "InviteState": 0,
+            "InviterUserName": "Dayton94",
+            "InvitationMessage": "Dayton94 has invited you to Rerum aut iure necessitatibus.."
+          },
+          {
+            "$id": "139",
+            "InvitationId": 32,
+            "EventId": 5,
+            "InvitedId": 19,
+            "InviteState": 0,
+            "InviterUserName": "Cheyenne_Wiza1",
+            "InvitationMessage": "Cheyenne_Wiza1 has invited you to Adipisci nihil sit hic deserunt sint maxime aut.."
+          }
+        ]
+      }
+    },
+    {
+      "$id": "140",
+      "UserId": 20,
+      "FirstName": "Malachi",
+      "LastName": "Champlin",
+      "UserName": "Malachi48",
+      "Email": "Malachi.Champlin@gmail.com",
+      "OwnedEvents": {
+        "$id": "141",
+        "$values": []
+      },
+      "ParticipantEvents": {
+        "$id": "142",
+        "$values": []
+      },
+      "Invites": {
+        "$id": "143",
+        "$values": [
+          {
+            "$id": "144",
+            "InvitationId": 7,
+            "EventId": 1,
+            "InvitedId": 20,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Iusto molestiae quia eius.."
+          },
+          {
+            "$id": "145",
+            "InvitationId": 13,
+            "EventId": 2,
+            "InvitedId": 20,
+            "InviteState": 0,
+            "InviterUserName": "Rylan33",
+            "InvitationMessage": "Rylan33 has invited you to Quia dolores sed vitae ipsam quidem.."
+          }
+        ]
+      }
+    }
+  ]
+}

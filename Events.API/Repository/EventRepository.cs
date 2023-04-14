@@ -117,13 +117,11 @@ namespace Events.API.Repository
         _logger.LogError(@$"Event not found for ID: {@event.EventId}");
         throw new KeyNotFoundException(@$"Event not found for ID: {@event.EventId}");
       }
-      existingEvent.OwnerId = @event.OwnerId;
+
       existingEvent.Title = @event.Title;
       existingEvent.Description = @event.Description;
       existingEvent.StartDate = @event.StartDate;
       existingEvent.EndDate = @event.EndDate;
-      existingEvent.Participants = @event.Participants;
-      existingEvent.Invites = @event.Invites;
       existingEvent.Location = @event.Location;
       existingEvent.EventType = @event.EventType;
 
